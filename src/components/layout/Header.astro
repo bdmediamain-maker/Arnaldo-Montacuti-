@@ -1,0 +1,204 @@
+---
+import { primaryNav, studio } from '@data/studio';
+---
+
+<header
+  id="site-header"
+  class="site-header"
+  data-scrolled="false"
+  aria-label="Navigazione principale"
+>
+  <div class="site-header__inner container-editorial">
+    <a href="/" class="site-header__logo" aria-label={`${studio.nome} — Home`}>
+      <span class="site-header__logo-text">MONTACUTI</span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Voci primarie">
+      {primaryNav.map((item) => (
+        <a href={item.href} class="site-header__nav-link">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <button
+      id="menu-trigger"
+      class="site-header__menu-trigger"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="menu-overlay"
+      aria-expanded="false"
+    >
+      <span class="site-header__menu-trigger-label">Menu</span>
+      <span class="site-header__menu-trigger-icon" aria-hidden="true">
+        <span></span><span></span>
+      </span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 50;
+    background: transparent;
+    border-block-end: 1px solid transparent;
+    transition:
+      background-color var(--duration-default) var(--ease-default),
+      border-color var(--duration-default) var(--ease-default);
+  }
+
+  .site-header[data-scrolled='true'] {
+    background-color: rgb(250 250 247 / 0.92);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-block-end-color: var(--color-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: 60px;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__inner {
+      height: 72px;
+    }
+  }
+
+  .site-header__logo {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--color-fg);
+  }
+
+  .site-header__logo-text {
+    display: inline-block;
+  }
+
+  .site-header__nav {
+    display: none;
+    gap: 2rem;
+    margin-inline-start: auto;
+    margin-inline-end: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__nav {
+      display: flex;
+    }
+  }
+
+  .site-header__nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--color-fg);
+    text-decoration: none;
+    position: relative;
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .site-header__nav-link::after {
+    content: '';
+    position: absolute;
+    inset-block-end: -4px;
+    inset-inline: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-default) var(--ease-out);
+  }
+
+  .site-header__nav-link:hover::after,
+  .site-header__nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .site-header__menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    margin-inline-end: -0.75rem;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .site-header__menu-trigger-icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 22px;
+    height: 14px;
+  }
+
+  .site-header__menu-trigger-icon > span {
+    display: block;
+    height: 1px;
+    background: currentColor;
+    transition: transform var(--duration-default) var(--ease-out);
+  }
+
+  .site-header__menu-trigger-icon > span:nth-child(1) {
+    width: 22px;
+  }
+
+  .site-header__menu-trigger-icon > span:nth-child(2) {
+    width: 14px;
+    margin-inline-start: auto;
+  }
+
+  .site-header__menu-trigger[aria-expanded='true'] .site-header__menu-trigger-icon > span:nth-child(2) {
+    width: 22px;
+  }
+
+  body[data-menu-open='true'] .site-header {
+    background-color: transparent;
+    border-block-end-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  if (header) {
+    const THRESHOLD = 80;
+    let ticking = false;
+
+    const update = () => {
+      const scrolled = window.scrollY > THRESHOLD;
+      header.dataset.scrolled = String(scrolled);
+      ticking = false;
+    };
+
+    update();
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
+</script>

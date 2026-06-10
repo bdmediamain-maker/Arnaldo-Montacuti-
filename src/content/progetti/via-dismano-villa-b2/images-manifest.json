@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:41:53.197Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-via-dismano-villa-unifamil",
+  "slug": "via-dismano-villa-b2",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_2faa811e52ce4677842b32c1557c7c23~mv2.jpg",
+    "quality_auto/4b6b13_2faa811e52ce4677842b32c1557c7c23~mv2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_2faa811e52ce4677842b32c1557c7c23~mv2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_2faa811e52ce4677842b32c1557c7c23~mv2.jpg"
+    }
+  ]
+}

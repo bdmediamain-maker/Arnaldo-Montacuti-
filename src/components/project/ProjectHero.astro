@@ -1,0 +1,134 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { categoriaLabel, statoLabel } from '@lib/labels';
+
+interface Props {
+  progetto: CollectionEntry<'progetti'>;
+}
+const { progetto } = Astro.props;
+const { data } = progetto;
+---
+
+<section class="project-hero">
+  <div class="project-hero__head container-editorial">
+    <p class="type-eyebrow project-hero__eyebrow reveal">
+      <span>{data.meta.localizzazione}</span>
+      <span aria-hidden="true">·</span>
+      <span>{data.anno}</span>
+      <span aria-hidden="true">·</span>
+      <span class="project-hero__stato" data-stato={data.stato}>{statoLabel[data.stato]}</span>
+    </p>
+    <h1 class="type-h1 project-hero__title reveal" style="--reveal-delay: 80ms;">
+      {data.titolo}
+      {data.sottotitolo && <span class="project-hero__sub">{data.sottotitolo}</span>}
+    </h1>
+    <p class="type-body project-hero__cat reveal" style="--reveal-delay: 160ms;">
+      {categoriaLabel[data.categoria]}
+    </p>
+  </div>
+
+  <figure class="project-hero__media reveal--image">
+    <Image
+      src={data.hero}
+      alt={`${data.titolo} — ${data.meta.localizzazione}`}
+      widths={[640, 1024, 1600, 2400]}
+      sizes="100vw"
+      loading="eager"
+      quality={82}
+      class="project-hero__img"
+    />
+    {
+      data.fotografo && (
+        <figcaption class="type-caption project-hero__credit">© {data.fotografo}</figcaption>
+      )
+    }
+  </figure>
+</section>
+
+<style>
+  .project-hero {
+    padding-block-start: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .project-hero {
+      padding-block-start: 3rem;
+    }
+  }
+
+  .project-hero__head {
+    padding-block-end: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .project-hero__head {
+      padding-block-end: 4rem;
+    }
+  }
+
+  .project-hero__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-block-end: 1.5rem;
+    color: var(--color-fg-muted);
+  }
+
+  .project-hero__stato[data-stato='realizzato'] {
+    color: var(--color-state-realized);
+  }
+  .project-hero__stato[data-stato='in-corso'] {
+    color: var(--color-state-in-progress);
+  }
+  .project-hero__stato[data-stato='concept'] {
+    color: var(--color-state-concept);
+  }
+
+  .project-hero__title {
+    max-width: 18ch;
+  }
+
+  .project-hero__sub {
+    display: block;
+    margin-block-start: 0.25em;
+    color: var(--color-fg-muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .project-hero__cat {
+    margin-block-start: 1.5rem;
+    color: var(--color-fg-muted);
+  }
+
+  .project-hero__media {
+    margin: 0;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-bg-subtle);
+    position: relative;
+  }
+
+  @media (max-width: 767px) {
+    .project-hero__media {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  .project-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .project-hero__credit {
+    position: absolute;
+    inset-block-end: 1rem;
+    inset-inline-end: 1.25rem;
+    color: var(--color-bg);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  }
+</style>

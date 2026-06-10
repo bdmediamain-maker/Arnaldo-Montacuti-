@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:40:09.138Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-ristrutturazione-ex-ristoran",
+  "slug": "stabilimento-siderurgico",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_b1ae2c1e730442729ea6cbe2ee45d6fc~mv2.jpg",
+    "quality_auto/4b6b13_b1ae2c1e730442729ea6cbe2ee45d6fc~mv2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_b1ae2c1e730442729ea6cbe2ee45d6fc~mv2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_b1ae2c1e730442729ea6cbe2ee45d6fc~mv2.jpg"
+    }
+  ]
+}

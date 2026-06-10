@@ -1,0 +1,124 @@
+---
+/**
+ * /privacy — placeholder.
+ * TESTO DA REDIGERE INSIEME AL CLIENTE / LEGALE PRIMA DEL GO-LIVE.
+ * Schema GDPR-compatibile: identità titolare, dati raccolti, finalità,
+ * base giuridica, conservazione, diritti, contatti.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { studio } from '@data/studio';
+---
+
+<BaseLayout
+  title="Privacy Policy — Studio Arnaldo Montacuti"
+  description="Informativa privacy ex art. 13 GDPR dello Studio Arnaldo Montacuti."
+  noindex
+>
+  <section class="container-editorial legal">
+    <p class="type-eyebrow legal__eyebrow">Informativa</p>
+    <h1 class="type-h1 legal__title">Privacy Policy</h1>
+    <p class="type-body legal__draft-banner">
+      <strong>Versione bozza.</strong> Questo testo è un placeholder da rivedere
+      con il legale del committente prima del go-live.
+    </p>
+
+    <h2 class="type-h2">Titolare del trattamento</h2>
+    <p class="type-body">
+      {studio.nome} · {studio.indirizzo.via}, {studio.indirizzo.cap}
+      {studio.indirizzo.citta} ({studio.indirizzo.provincia}) — email
+      <a href={`mailto:${studio.contatti.email}`}>{studio.contatti.email}</a>
+    </p>
+
+    <h2 class="type-h2">Dati raccolti tramite il modulo contatti</h2>
+    <p class="type-body">
+      Quando compili il modulo su <a href="/contatti">/contatti</a> raccogliamo:
+      nome, email, numero di telefono (facoltativo), tipologia di progetto
+      (facoltativa) e il testo del messaggio.
+    </p>
+
+    <h2 class="type-h2">Finalità e base giuridica</h2>
+    <p class="type-body">
+      I dati sono trattati per dare seguito alla tua richiesta di contatto.
+      Base giuridica: esecuzione di misure precontrattuali su tua richiesta
+      (art. 6 par. 1 lett. b GDPR).
+    </p>
+
+    <h2 class="type-h2">Conservazione</h2>
+    <p class="type-body">
+      I messaggi ricevuti sono conservati per il tempo necessario a evadere la
+      richiesta e per gli eventuali adempimenti di legge collegati.
+    </p>
+
+    <h2 class="type-h2">Diritti dell'interessato</h2>
+    <p class="type-body">
+      In qualsiasi momento puoi richiedere accesso, rettifica, cancellazione,
+      limitazione o opposizione al trattamento, e proporre reclamo al Garante
+      per la protezione dei dati personali. Scrivi a
+      <a href={`mailto:${studio.contatti.email}`}>{studio.contatti.email}</a>.
+    </p>
+
+    <h2 class="type-h2">Servizi terzi</h2>
+    <p class="type-body">
+      Il modulo contatti utilizza <strong>Resend</strong> (provider email
+      transazionale) per recapitare il messaggio. Il sito è hosted su
+      <strong>[hosting provider — da specificare]</strong>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: 4rem 8rem;
+    max-width: 70ch;
+  }
+
+  @media (min-width: 768px) {
+    .legal {
+      padding-block: 6rem 10rem;
+    }
+  }
+
+  .legal__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .legal__title {
+    margin-block-end: 2rem;
+  }
+
+  .legal__draft-banner {
+    background-color: var(--color-accent-subtle);
+    border-inline-start: 3px solid var(--color-accent);
+    padding: 1rem 1.25rem;
+    margin-block-end: 3rem;
+    color: var(--color-fg);
+  }
+
+  .legal h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-block: 2.5rem 1rem;
+    color: var(--color-fg);
+  }
+
+  .legal p {
+    color: var(--color-fg-muted);
+    margin-block-end: 1rem;
+    line-height: 1.65;
+  }
+
+  .legal a {
+    color: var(--color-fg);
+    border-block-end: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .legal a:hover,
+  .legal a:focus-visible {
+    border-block-end-color: var(--color-fg);
+  }
+</style>

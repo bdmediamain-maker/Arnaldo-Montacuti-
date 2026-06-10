@@ -1,0 +1,23 @@
+{
+  "scraped_at": "2026-06-10T13:42:53.158Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-parco-giardino",
+  "slug": "parco-giardino-villette",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg",
+    "quality_auto/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg",
+    "https://static.wixstatic.com/media/4b6b13_ff4cda450ed34cd6a78934d7ab334f2c~mv2.jpg",
+    "quality_auto/4b6b13_ff4cda450ed34cd6a78934d7ab334f2c~mv2.jpg"
+  ],
+  "downloaded": 2,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg"
+    },
+    {
+      "url": "quality_auto/4b6b13_ff4cda450ed34cd6a78934d7ab334f2c~mv2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_ff4cda450ed34cd6a78934d7ab334f2c~mv2.jpg"
+    }
+  ]
+}

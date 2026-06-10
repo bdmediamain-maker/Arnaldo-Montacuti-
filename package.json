@@ -1,0 +1,27 @@
+{
+  "name": "montacuti",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/node": "^9.5.5",
+    "@astrojs/sitemap": "^3.2.1",
+    "@tailwindcss/vite": "^4.1.7",
+    "astro": "^5.8.0",
+    "resend": "^6.12.4",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}

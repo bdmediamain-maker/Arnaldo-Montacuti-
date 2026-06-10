@@ -1,0 +1,273 @@
+---
+/**
+ * ProjectFilters — filtri client-side per l'indice /progetti.
+ *
+ * Approccio:
+ *   - Render lato server di tutte le card con data-* attrs (categoria, stato, anno)
+ *   - Vanilla JS island gestisce visibility via dataset filter state
+ *   - Stato sincronizzato con URL query string (?categoria=... &stato=... &anno=...)
+ *     così i link dal menu overlay / footer / home arrivano già filtrati
+ *
+ * Filtri: pill buttons toggle. "Tutti" = clear filter del gruppo.
+ */
+import { categoriaLabel, statoLabel } from '@lib/labels';
+
+interface Props {
+  /** Tutti gli anni disponibili tra i progetti pubblicati, ordinati desc */
+  anni: Array<number | string>;
+  /** Conteggio iniziale (server-side) */
+  totale: number;
+}
+const { anni, totale } = Astro.props;
+
+const categoriaKeys = Object.keys(categoriaLabel) as Array<keyof typeof categoriaLabel>;
+const statoKeys = Object.keys(statoLabel) as Array<keyof typeof statoLabel>;
+---
+
+<div class="filters" id="project-filters" data-totale={totale}>
+  <div class="filters__group" data-filter="categoria">
+    <p class="type-eyebrow filters__label">Categoria</p>
+    <div class="filters__pills" role="group" aria-label="Filtra per categoria">
+      <button type="button" class="filters__pill" data-value="" aria-pressed="true">Tutti</button>
+      {
+        categoriaKeys.map((cat) => (
+          <button type="button" class="filters__pill" data-value={cat} aria-pressed="false">
+            {categoriaLabel[cat]}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="filters__group" data-filter="stato">
+    <p class="type-eyebrow filters__label">Stato</p>
+    <div class="filters__pills" role="group" aria-label="Filtra per stato">
+      <button type="button" class="filters__pill" data-value="" aria-pressed="true">Tutti</button>
+      {
+        statoKeys.map((s) => (
+          <button type="button" class="filters__pill" data-value={s} aria-pressed="false">
+            {statoLabel[s]}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    anni.length > 1 && (
+      <div class="filters__group" data-filter="anno">
+        <p class="type-eyebrow filters__label">Anno</p>
+        <div class="filters__pills" role="group" aria-label="Filtra per anno">
+          <button type="button" class="filters__pill" data-value="" aria-pressed="true">Tutti</button>
+          {anni.map((y) => (
+            <button type="button" class="filters__pill" data-value={String(y)} aria-pressed="false">
+              {y}
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  <div class="filters__result" aria-live="polite">
+    <span class="type-eyebrow filters__count" id="filters-count" aria-label={`${totale} progetti corrispondenti`}>{totale} progetti</span>
+    <button type="button" class="filters__reset" id="filters-reset" hidden aria-label="Resetta tutti i filtri">Resetta</button>
+  </div>
+</div>
+
+<style>
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-block: 2.5rem 3rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .filters {
+      padding-block: 3rem 3.5rem;
+    }
+  }
+
+  .filters__group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filters__label {
+    color: var(--color-fg-subtle);
+  }
+
+  .filters__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filters__pill {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-fg);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-default),
+      border-color var(--duration-fast) var(--ease-default),
+      color var(--duration-fast) var(--ease-default);
+  }
+
+  .filters__pill:hover {
+    border-color: var(--color-fg);
+  }
+
+  .filters__pill[aria-pressed='true'] {
+    background-color: var(--color-fg);
+    border-color: var(--color-fg);
+    color: var(--color-bg);
+  }
+
+  .filters__result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block-start: 1rem;
+  }
+
+  .filters__count {
+    color: var(--color-fg-muted);
+  }
+
+  .filters__reset {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    border-block-end: 1px solid var(--color-fg);
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .filters__reset:hover,
+  .filters__reset:focus-visible {
+    color: var(--color-accent);
+    border-block-end-color: var(--color-accent);
+  }
+
+  .filters__reset[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  const root = document.getElementById('project-filters');
+  if (root) {
+    const state = { categoria: '', stato: '', anno: '' };
+    const countEl = document.getElementById('filters-count') as HTMLElement | null;
+    const resetEl = document.getElementById('filters-reset') as HTMLButtonElement | null;
+
+    function readUrl() {
+      const params = new URLSearchParams(window.location.search);
+      state.categoria = params.get('categoria') ?? '';
+      state.stato = params.get('stato') ?? '';
+      state.anno = params.get('anno') ?? '';
+    }
+
+    function writeUrl() {
+      const params = new URLSearchParams();
+      if (state.categoria) params.set('categoria', state.categoria);
+      if (state.stato) params.set('stato', state.stato);
+      if (state.anno) params.set('anno', state.anno);
+      const qs = params.toString();
+      const next = qs ? `?${qs}` : window.location.pathname;
+      window.history.replaceState({}, '', next);
+    }
+
+    function syncPills() {
+      root!.querySelectorAll<HTMLElement>('.filters__group').forEach((g) => {
+        const filter = g.dataset.filter as keyof typeof state;
+        const current = state[filter];
+        g.querySelectorAll<HTMLButtonElement>('.filters__pill').forEach((btn) => {
+          const v = btn.dataset.value ?? '';
+          btn.setAttribute('aria-pressed', String(v === current));
+        });
+      });
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll<HTMLElement>('[data-progetto-card]');
+      let visible = 0;
+      cards.forEach((card) => {
+        const cat = card.dataset.categoria ?? '';
+        const sta = card.dataset.stato ?? '';
+        const ann = card.dataset.anno ?? '';
+        const match =
+          (!state.categoria || state.categoria === cat) &&
+          (!state.stato || state.stato === sta) &&
+          (!state.anno || state.anno === ann);
+        card.toggleAttribute('hidden', !match);
+        if (match) visible++;
+      });
+
+      if (countEl) {
+        countEl.textContent = `${visible} ${visible === 1 ? 'progetto' : 'progetti'}`;
+      }
+
+      const empty = document.getElementById('progetti-empty');
+      if (empty) empty.toggleAttribute('hidden', visible !== 0);
+
+      const isFiltered = !!(state.categoria || state.stato || state.anno);
+      if (resetEl) resetEl.toggleAttribute('hidden', !isFiltered);
+    }
+
+    function onPillClick(e: Event) {
+      const btn = (e.target as HTMLElement).closest('.filters__pill') as HTMLButtonElement | null;
+      if (!btn) return;
+      const group = btn.closest('.filters__group') as HTMLElement | null;
+      if (!group) return;
+      const filter = group.dataset.filter as keyof typeof state;
+      const value = btn.dataset.value ?? '';
+      state[filter] = state[filter] === value ? '' : value;
+      // "Tutti" semantica: forza clear
+      if (value === '') state[filter] = '';
+      syncPills();
+      applyFilters();
+      writeUrl();
+    }
+
+    function onReset() {
+      state.categoria = '';
+      state.stato = '';
+      state.anno = '';
+      syncPills();
+      applyFilters();
+      writeUrl();
+    }
+
+    readUrl();
+    syncPills();
+    applyFilters();
+
+    root.addEventListener('click', onPillClick);
+    resetEl?.addEventListener('click', onReset);
+
+    // Aggiorna se l'utente naviga avanti/indietro nel browser
+    window.addEventListener('popstate', () => {
+      readUrl();
+      syncPills();
+      applyFilters();
+    });
+  }
+</script>

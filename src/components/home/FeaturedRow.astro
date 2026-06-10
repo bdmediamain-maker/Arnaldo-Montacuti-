@@ -1,0 +1,111 @@
+---
+/**
+ * FeaturedRow (Pattern 2) — riga 3 progetti TOP come hero collettivo della home.
+ * Usa ProjectCard con aspect 3/2 per dare ampiezza editoriale.
+ */
+import ProjectCard from '@components/project/ProjectCard.astro';
+import { getFeatured } from '@lib/projects';
+
+const featured = (await getFeatured()).slice(0, 3);
+---
+
+{
+  featured.length > 0 && (
+    <section class="featured-row" aria-labelledby="featured-row-title">
+      <div class="container-editorial">
+        <header class="featured-row__head">
+          <p class="type-eyebrow featured-row__eyebrow" id="featured-row-title">
+            Progetti in evidenza
+          </p>
+          <a class="featured-row__viewall" href="/progetti" aria-label="Vedi tutti i progetti">
+            Tutti i progetti
+            <span aria-hidden="true">→</span>
+          </a>
+        </header>
+        <div class="featured-row__grid">
+          {featured.map((p, i) => (
+            <ProjectCard
+              progetto={p}
+              aspect="3/2"
+              showCategoria={true}
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .featured-row {
+    padding-block: 2rem 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .featured-row {
+      padding-block: 3rem 8rem;
+    }
+  }
+
+  .featured-row__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block-end: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .featured-row__head {
+      margin-block-end: 3.5rem;
+    }
+  }
+
+  .featured-row__eyebrow {
+    color: var(--color-fg-subtle);
+  }
+
+  .featured-row__viewall {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    border-block-end: 1px solid transparent;
+    padding-block-end: 0.25rem;
+    transition:
+      color var(--duration-fast) var(--ease-default),
+      border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .featured-row__viewall:hover,
+  .featured-row__viewall:focus-visible {
+    color: var(--color-accent);
+    border-block-end-color: var(--color-accent);
+  }
+
+  .featured-row__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .featured-row__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-row__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4rem 2.5rem;
+    }
+  }
+</style>

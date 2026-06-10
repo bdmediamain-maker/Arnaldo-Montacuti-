@@ -1,0 +1,161 @@
+---
+import '@styles/global.css';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import MenuOverlay from '@components/layout/MenuOverlay.astro';
+import SchemaOrganization from '@components/seo/SchemaOrganization.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  /** Quando true, il main NON ha padding-top per compensare l'header (utile per hero full-bleed). */
+  edgeToEdge?: boolean;
+  /** Disabilita lo Schema.org Organization globale (utile se la pagina ne emette uno custom). */
+  disableSchemaOrg?: boolean;
+}
+
+const {
+  title = 'Studio Arnaldo Montacuti — Architettura, Cesena',
+  description = "Studio dell'architetto Arnaldo Montacuti, Cesena. Progetti residenziali, commerciali e di riqualificazione urbana in Romagna.",
+  ogImage = '/og-default.jpg',
+  noindex = false,
+  edgeToEdge = false,
+  disableSchemaOrg = false,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://studiomontacuti.it');
+const canonical = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, siteUrl).toString();
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Font preload (critical) -->
+    <link rel="preload" href="/fonts/Fraunces-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta name="theme-color" content="#fafaf7" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:site_name" content="Studio Arnaldo Montacuti" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Schema.org JSON-LD (Organization + LocalBusiness + WebSite) -->
+    {!disableSchemaOrg && <SchemaOrganization />}
+
+    <!-- Slot per JSON-LD aggiuntivi (page-specific) -->
+    <slot name="head-extra" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Vai al contenuto</a>
+
+    <Header />
+
+    <main id="main" tabindex="-1" class:list={[{ 'main--padded': !edgeToEdge }]}>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <MenuOverlay />
+
+    <!-- Reveal-on-scroll bootstrap. Lightweight IntersectionObserver — no Lenis/GSAP. -->
+    <script is:inline>
+      (() => {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const sel = '.reveal, .reveal--image, .reveal--fade';
+
+        function revealAll() {
+          document.querySelectorAll(sel).forEach((el) => el.setAttribute('data-revealed', 'true'));
+        }
+
+        if (reduced || !('IntersectionObserver' in window)) {
+          revealAll();
+          return;
+        }
+
+        function reveal(el) {
+          el.setAttribute('data-revealed', 'true');
+          // Imposta le custom property che il CSS legge — evita conflitti
+          // con altre regole CSS che potrebbero matchare attribute selectors.
+          el.style.setProperty('--reveal-o', '1');
+          el.style.setProperty('--reveal-y', '0px');
+          if (el.classList.contains('reveal--image')) {
+            el.style.setProperty('--reveal-clip', 'inset(0 0 0 0)');
+          }
+        }
+
+        function init() {
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  io.unobserve(entry.target);
+                }
+              }
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+          );
+
+          // 1) Elementi GIÀ visibili nel viewport iniziale → reveal subito (no animation flash)
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          document.querySelectorAll(sel).forEach((el) => {
+            if (el.getAttribute('data-revealed') === 'true') return;
+            const r = el.getBoundingClientRect();
+            if (r.top < vh && r.bottom > 0) {
+              reveal(el);
+            } else {
+              io.observe(el);
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init, { once: true });
+        } else {
+          init();
+        }
+        document.addEventListener('astro:page-load', init);
+      })();
+    </script>
+
+    <style is:global>
+      .main--padded {
+        padding-block-start: 60px;
+      }
+      @media (min-width: 768px) {
+        .main--padded {
+          padding-block-start: 72px;
+        }
+      }
+    </style>
+  </body>
+</html>

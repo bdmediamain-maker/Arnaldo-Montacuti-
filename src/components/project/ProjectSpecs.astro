@@ -1,0 +1,99 @@
+---
+interface Spec {
+  label: string;
+  content: string;
+}
+interface Props {
+  specs: Spec[];
+  eyebrow?: string;
+}
+const { specs, eyebrow = 'Dettagli tecnici' } = Astro.props;
+const total = String(specs.length).padStart(2, '0');
+---
+
+<section class="project-specs container-editorial" aria-labelledby="project-specs-title">
+  <p class="type-eyebrow project-specs__head" id="project-specs-title">{eyebrow}</p>
+  <ol class="project-specs__list">
+    {
+      specs.map((spec, i) => {
+        const n = String(i + 1).padStart(2, '0');
+        const delay = i * 80;
+        return (
+          <li class="project-specs__item reveal" style={`--reveal-delay: ${delay}ms;`}>
+            <p class="type-eyebrow project-specs__num">
+              {n} <span class="project-specs__slash" aria-hidden="true">/</span> {total}
+            </p>
+            <h3 class="type-h3 project-specs__label">{spec.label}</h3>
+            <p class="type-body project-specs__content">{spec.content}</p>
+          </li>
+        );
+      })
+    }
+  </ol>
+</section>
+
+<style>
+  .project-specs {
+    padding-block: 5rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .project-specs {
+      padding-block: 7rem;
+    }
+  }
+
+  .project-specs__head {
+    color: var(--color-fg-subtle);
+    margin-block-end: 3rem;
+  }
+
+  .project-specs__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .project-specs__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 4rem;
+      row-gap: 4rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .project-specs__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .project-specs__item {
+    padding-block-start: 1.5rem;
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .project-specs__num {
+    color: var(--color-accent);
+    margin-block-end: 1rem;
+  }
+
+  .project-specs__slash {
+    color: var(--color-fg-subtle);
+    margin-inline: 0.15em;
+  }
+
+  .project-specs__label {
+    margin-block-end: 0.75rem;
+    color: var(--color-fg);
+  }
+
+  .project-specs__content {
+    color: var(--color-fg-muted);
+    line-height: 1.6;
+  }
+</style>

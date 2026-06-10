@@ -1,0 +1,117 @@
+---
+/**
+ * ProjectCard (Pattern 3) — adattamento here-away al design Montacuti:
+ *   - immagine 4:3 (default) o variabile
+ *   - eyebrow mono uppercase "LOCALITÀ · ANNO"
+ *   - nome serif sotto immagine
+ *   - categoria caption opzionale
+ *   - NO box, NO ombre, intera area cliccabile
+ *   - hover: kenburns lentissimo + underline sotto nome
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { categoriaLabel } from '@lib/labels';
+
+interface Props {
+  progetto: CollectionEntry<'progetti'>;
+  aspect?: '4/3' | '3/2' | '16/9';
+  showCategoria?: boolean;
+  loading?: 'eager' | 'lazy';
+}
+const { progetto, aspect = '4/3', showCategoria = true, loading = 'lazy' } = Astro.props;
+const { data, id } = progetto;
+const href = `/progetti/${id}`;
+
+// Estrae la prima parte della localizzazione (prima della virgola o trattino),
+// es. "Ponte Abbadesse, Cesena (FC)" → "Ponte Abbadesse"
+//     "Cesena (FC) — piazzale Risorgimento" → "Cesena (FC)" → "Cesena"
+const localBreve = data.meta.localizzazione
+  .split(/[,—–]/)[0]
+  .replace(/\s*\([A-Z]{2}\)\s*/g, '')
+  .trim();
+---
+
+<a class="project-card reveal" href={href} aria-label={`${data.titolo}, ${localBreve}, ${data.anno}`}>
+  <div class="project-card__media" style={`--aspect: ${aspect};`}>
+    <Image
+      src={data.hero}
+      alt={data.titolo}
+      widths={[400, 600, 900]}
+      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+      loading={loading}
+      quality={78}
+      class="project-card__img"
+    />
+  </div>
+  <div class="project-card__meta">
+    <p class="type-eyebrow project-card__eyebrow">
+      {localBreve.toUpperCase()} <span aria-hidden="true">·</span> {data.anno}
+    </p>
+    <h3 class="project-card__title">{data.titolo}</h3>
+    {showCategoria && <p class="type-caption project-card__cat">{categoriaLabel[data.categoria]}</p>}
+  </div>
+</a>
+
+<style>
+  .project-card {
+    display: block;
+    color: var(--color-fg);
+    text-decoration: none;
+    transition: transform var(--duration-default) var(--ease-out);
+  }
+
+  .project-card:hover,
+  .project-card:focus-visible {
+    transform: translateY(-4px);
+  }
+
+  .project-card__media {
+    width: 100%;
+    aspect-ratio: var(--aspect, 4 / 3);
+    overflow: hidden;
+    background-color: var(--color-bg-subtle);
+    margin-block-end: 1.25rem;
+  }
+
+  .project-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1);
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .project-card:hover .project-card__img,
+  .project-card:focus-visible .project-card__img {
+    transform: scale(1.04);
+  }
+
+  .project-card__eyebrow {
+    color: var(--color-fg-muted);
+    margin-block-end: 0.5rem;
+  }
+
+  .project-card__title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    transition: background-size var(--duration-default) var(--ease-out);
+  }
+
+  .project-card:hover .project-card__title,
+  .project-card:focus-visible .project-card__title {
+    background-size: 100% 1px;
+  }
+
+  .project-card__cat {
+    color: var(--color-fg-subtle);
+  }
+</style>

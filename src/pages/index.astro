@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/home/Hero.astro';
+import FeaturedRow from '@components/home/FeaturedRow.astro';
+import StudioIntro from '@components/home/StudioIntro.astro';
+import ExploreBy from '@components/home/ExploreBy.astro';
+import PlanYourProjectCTA from '@components/cta/PlanYourProjectCTA.astro';
+---
+
+<BaseLayout
+  title="Studio Arnaldo Montacuti — Architettura, Cesena"
+  description="Studio dell'architetto Arnaldo Montacuti, Cesena. Progetti residenziali, commerciali e di riqualificazione urbana in Romagna dal 1985."
+>
+  <Hero />
+  <FeaturedRow />
+  <StudioIntro />
+  <ExploreBy />
+  <PlanYourProjectCTA />
+</BaseLayout>

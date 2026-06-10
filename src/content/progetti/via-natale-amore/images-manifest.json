@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:42:21.765Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-ristrutturazione-ex-ristor",
+  "slug": "via-natale-amore",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_932d1fee6e2f4bb094e95d0b7dce0a66~mv2_d_4208_1961_s_2.jpg",
+    "quality_auto/4b6b13_932d1fee6e2f4bb094e95d0b7dce0a66~mv2_d_4208_1961_s_2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_932d1fee6e2f4bb094e95d0b7dce0a66~mv2_d_4208_1961_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_932d1fee6e2f4bb094e95d0b7dce0a66~mv2_d_4208_1961_s_2.jpg"
+    }
+  ]
+}

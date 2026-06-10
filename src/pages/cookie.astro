@@ -1,0 +1,110 @@
+---
+/**
+ * /cookie — placeholder cookie policy.
+ * TESTO DA REDIGERE INSIEME AL CLIENTE PRIMA DEL GO-LIVE.
+ * Il sito Astro statico NON usa cookie di tracking. Se Bedr aggiunge Plausible/
+ * Umami o un cookie tecnico per la sessione admin, va aggiunto qui.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { studio } from '@data/studio';
+---
+
+<BaseLayout
+  title="Cookie Policy — Studio Arnaldo Montacuti"
+  description="Informativa cookie del sito Studio Arnaldo Montacuti."
+  noindex
+>
+  <section class="container-editorial legal">
+    <p class="type-eyebrow legal__eyebrow">Informativa</p>
+    <h1 class="type-h1 legal__title">Cookie Policy</h1>
+    <p class="type-body legal__draft-banner">
+      <strong>Versione bozza.</strong> Questo testo è un placeholder da rivedere
+      con il legale del committente prima del go-live.
+    </p>
+
+    <h2 class="type-h2">Cosa sono i cookie</h2>
+    <p class="type-body">
+      I cookie sono piccoli file di testo che i siti visitati salvano sul tuo
+      dispositivo. Servono a far funzionare i siti, a renderli più sicuri o a
+      raccogliere statistiche.
+    </p>
+
+    <h2 class="type-h2">Cookie utilizzati da questo sito</h2>
+    <p class="type-body">
+      Questo sito è realizzato come build statico e <strong>non utilizza
+      cookie di tracciamento, pubblicitari o di profilazione</strong>.
+    </p>
+    <p class="type-body">
+      Eventuali servizi di terze parti (es. mappa Google, analytics privacy-friendly)
+      saranno elencati qui in modo specifico quando attivati.
+    </p>
+
+    <h2 class="type-h2">Titolare</h2>
+    <p class="type-body">
+      {studio.nome} — <a href={`mailto:${studio.contatti.email}`}>{studio.contatti.email}</a>
+    </p>
+
+    <h2 class="type-h2">Maggiori informazioni</h2>
+    <p class="type-body">
+      Vedi la nostra <a href="/privacy">Privacy Policy</a> per il dettaglio
+      sul trattamento dei dati personali.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: 4rem 8rem;
+    max-width: 70ch;
+  }
+
+  @media (min-width: 768px) {
+    .legal {
+      padding-block: 6rem 10rem;
+    }
+  }
+
+  .legal__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .legal__title {
+    margin-block-end: 2rem;
+  }
+
+  .legal__draft-banner {
+    background-color: var(--color-accent-subtle);
+    border-inline-start: 3px solid var(--color-accent);
+    padding: 1rem 1.25rem;
+    margin-block-end: 3rem;
+    color: var(--color-fg);
+  }
+
+  .legal h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-block: 2.5rem 1rem;
+    color: var(--color-fg);
+  }
+
+  .legal p {
+    color: var(--color-fg-muted);
+    margin-block-end: 1rem;
+    line-height: 1.65;
+  }
+
+  .legal a {
+    color: var(--color-fg);
+    border-block-end: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .legal a:hover,
+  .legal a:focus-visible {
+    border-block-end-color: var(--color-fg);
+  }
+</style>

@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:38:39.626Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-nuovo-conad-ponte-abbadess",
+  "slug": "riqualificazione-via-battisti",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_aad19b9f0cbc46098bec450a8b42d6e1~mv2_d_3508_2480_s_4_2.jpg",
+    "quality_auto/4b6b13_aad19b9f0cbc46098bec450a8b42d6e1~mv2_d_3508_2480_s_4_2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_aad19b9f0cbc46098bec450a8b42d6e1~mv2_d_3508_2480_s_4_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_aad19b9f0cbc46098bec450a8b42d6e1~mv2_d_3508_2480_s_4_2.jpg"
+    }
+  ]
+}

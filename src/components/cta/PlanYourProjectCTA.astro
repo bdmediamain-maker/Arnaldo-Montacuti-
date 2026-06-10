@@ -1,0 +1,86 @@
+---
+/**
+ * PlanYourProjectCTA (Pattern 12 adattato) — CTA finale pre-footer.
+ * Sostituisce la newsletter signup di here-away con un invito a iniziare
+ * un progetto. Più diretto, più allineato al lead-gen target.
+ */
+interface Props {
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+}
+const {
+  eyebrow = 'Inizia un progetto',
+  headline = 'Hai un progetto in mente?',
+  body = "Lo studio Montacuti progetta a Cesena e in Romagna dal 1985: residenze, spazi commerciali e riqualificazioni urbane. Parliamone — bastano poche righe per cominciare.",
+  cta = { label: 'Contattaci →', href: '/contatti' },
+} = Astro.props;
+---
+
+<section class="plan-cta">
+  <div class="container-editorial plan-cta__inner">
+    <p class="type-eyebrow plan-cta__eyebrow">{eyebrow}</p>
+    <h2 class="type-h2 plan-cta__headline">{headline}</h2>
+    <p class="type-body-lg plan-cta__body">{body}</p>
+    <a class="plan-cta__btn" href={cta.href}>{cta.label}</a>
+  </div>
+</section>
+
+<style>
+  .plan-cta {
+    background-color: var(--color-fg);
+    color: var(--color-bg);
+    border-block-end: 1px solid var(--color-fg);
+  }
+
+  .plan-cta__inner {
+    padding-block: 5rem;
+    text-align: left;
+    max-width: 72ch;
+  }
+
+  @media (min-width: 768px) {
+    .plan-cta__inner {
+      padding-block: 8rem;
+    }
+  }
+
+  .plan-cta__eyebrow {
+    color: var(--color-bg-subtle);
+    opacity: 0.7;
+    margin-block-end: 1.5rem;
+  }
+
+  .plan-cta__headline {
+    color: var(--color-bg);
+    margin-block-end: 1.5rem;
+    max-width: 18ch;
+  }
+
+  .plan-cta__body {
+    color: var(--color-bg-subtle);
+    margin-block-end: 2.5rem;
+    max-width: 56ch;
+  }
+
+  .plan-cta__btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+  }
+
+  .plan-cta__btn:hover,
+  .plan-cta__btn:focus-visible {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+</style>

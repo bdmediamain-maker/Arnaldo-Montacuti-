@@ -1,0 +1,80 @@
+---
+/**
+ * SchemaOrganization — JSON-LD globale per le pagine.
+ * Combina @id-referenziati: WebSite + Organization + LocalBusiness/ProfessionalService.
+ *
+ * NOTA: ArchitectService non è uno schema.org type valido — uso
+ * `ProfessionalService` con `additionalType` per disambiguare in studio d'architettura.
+ */
+import JsonLd from './JsonLd.astro';
+import { studio } from '@data/studio';
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://studiomontacuti.it';
+
+const webSite = {
+  '@type': 'WebSite',
+  '@id': `${site}#website`,
+  url: `${site}/`,
+  name: studio.nome,
+  inLanguage: 'it-IT',
+  publisher: { '@id': `${site}#organization` },
+};
+
+const organization = {
+  '@type': 'Organization',
+  '@id': `${site}#organization`,
+  name: studio.nome,
+  url: `${site}/`,
+  email: studio.contatti.email,
+  telephone: studio.contatti.telefono,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: studio.indirizzo.via,
+    addressLocality: studio.indirizzo.citta,
+    postalCode: studio.indirizzo.cap,
+    addressRegion: studio.indirizzo.provincia,
+    addressCountry: 'IT',
+  },
+  founder: {
+    '@type': 'Person',
+    name: 'Arnaldo Montacuti',
+    jobTitle: 'Architetto',
+  },
+};
+
+const localBusiness = {
+  '@type': 'ProfessionalService',
+  '@id': `${site}#business`,
+  name: studio.nome,
+  additionalType: 'http://www.productontology.org/id/Architect',
+  url: `${site}/`,
+  email: studio.contatti.email,
+  telephone: studio.contatti.telefono,
+  priceRange: '€€',
+  areaServed: [
+    { '@type': 'City', name: 'Cesena' },
+    { '@type': 'AdministrativeArea', name: 'Romagna' },
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: studio.indirizzo.via,
+    addressLocality: studio.indirizzo.citta,
+    postalCode: studio.indirizzo.cap,
+    addressRegion: studio.indirizzo.provincia,
+    addressCountry: 'IT',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 44.137,
+    longitude: 12.243,
+  },
+  parentOrganization: { '@id': `${site}#organization` },
+};
+
+const data = {
+  '@context': 'https://schema.org',
+  '@graph': [webSite, organization, localBusiness],
+};
+---
+
+<JsonLd data={data} />

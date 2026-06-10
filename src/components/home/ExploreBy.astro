@@ -1,0 +1,193 @@
+---
+/**
+ * ExploreBy (Pattern 4 — here-away adattato)
+ *
+ * 3 colonne con raggruppamenti: Per categoria · Per stato · Per anno.
+ * Ogni voce è un link verso /progetti con il filtro pre-applicato (deep-link).
+ * Calcola dinamicamente quali categorie/stati/anni esistono tra i progetti
+ * pubblicati così non mostriamo voci che ritornerebbero 0 risultati.
+ */
+import { listProgetti } from '@lib/projects';
+import { categoriaLabel, statoLabel } from '@lib/labels';
+
+const progetti = await listProgetti();
+
+// Quali categorie hanno almeno 1 progetto pubblicato
+const catKeys = Array.from(new Set(progetti.map((p) => p.data.categoria)));
+const statoKeys = Array.from(new Set(progetti.map((p) => p.data.stato)));
+const anni = Array.from(
+  new Set(
+    progetti
+      .map((p) => (typeof p.data.anno === 'number' ? p.data.anno : parseInt(String(p.data.anno), 10)))
+      .filter((n) => Number.isFinite(n)),
+  ),
+).sort((a, b) => b - a);
+
+// Conteggio per voce
+const countByCat: Record<string, number> = {};
+catKeys.forEach((k) => {
+  countByCat[k] = progetti.filter((p) => p.data.categoria === k).length;
+});
+const countByStato: Record<string, number> = {};
+statoKeys.forEach((k) => {
+  countByStato[k] = progetti.filter((p) => p.data.stato === k).length;
+});
+const countByAnno: Record<number, number> = {};
+anni.forEach((y) => {
+  countByAnno[y] = progetti.filter((p) => Number(p.data.anno) === y).length;
+});
+---
+
+<section class="explore-by" aria-labelledby="explore-by-title">
+  <div class="container-editorial">
+    <header class="explore-by__head">
+      <p class="type-eyebrow explore-by__eyebrow" id="explore-by-title">
+        Esplora i progetti
+      </p>
+      <h2 class="type-h2 explore-by__title">Trova un punto di partenza</h2>
+    </header>
+
+    <div class="explore-by__grid">
+      <div class="explore-by__col">
+        <p class="type-eyebrow explore-by__label">Per categoria</p>
+        <ul class="explore-by__list">
+          {
+            catKeys.map((k) => (
+              <li>
+                <a class="explore-by__link" href={`/progetti?categoria=${k}`}>
+                  <span class="explore-by__link-label">{categoriaLabel[k]}</span>
+                  <span class="explore-by__count" aria-label={`${countByCat[k]} progetti`}>
+                    {String(countByCat[k]).padStart(2, '0')}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="explore-by__col">
+        <p class="type-eyebrow explore-by__label">Per stato</p>
+        <ul class="explore-by__list">
+          {
+            statoKeys.map((k) => (
+              <li>
+                <a class="explore-by__link" href={`/progetti?stato=${k}`}>
+                  <span class="explore-by__link-label">{statoLabel[k]}</span>
+                  <span class="explore-by__count" aria-label={`${countByStato[k]} progetti`}>
+                    {String(countByStato[k]).padStart(2, '0')}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="explore-by__col">
+        <p class="type-eyebrow explore-by__label">Per anno</p>
+        <ul class="explore-by__list">
+          {
+            anni.map((y) => (
+              <li>
+                <a class="explore-by__link" href={`/progetti?anno=${y}`}>
+                  <span class="explore-by__link-label">{y}</span>
+                  <span class="explore-by__count" aria-label={`${countByAnno[y]} progetti`}>
+                    {String(countByAnno[y]).padStart(2, '0')}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .explore-by {
+    padding-block: 6rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .explore-by {
+      padding-block: 9rem;
+    }
+  }
+
+  .explore-by__head {
+    margin-block-end: 4rem;
+  }
+
+  .explore-by__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.25rem;
+  }
+
+  .explore-by__title {
+    max-width: 18ch;
+  }
+
+  .explore-by__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .explore-by__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+
+  .explore-by__label {
+    color: var(--color-fg-muted);
+    margin-block-end: 1.5rem;
+    padding-block-end: 1rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .explore-by__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .explore-by__link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.875rem;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-fg);
+    text-decoration: none;
+    border-block-end: 1px solid var(--color-border);
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .explore-by__link:hover,
+  .explore-by__link:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .explore-by__count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-fg-subtle);
+  }
+
+  .explore-by__link:hover .explore-by__count,
+  .explore-by__link:focus-visible .explore-by__count {
+    color: var(--color-accent);
+  }
+</style>

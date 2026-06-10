@@ -1,0 +1,23 @@
+{
+  "scraped_at": "2026-06-10T13:42:36.872Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/parco-giardino",
+  "slug": "parco-giardino-condomini",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg",
+    "quality_auto/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg",
+    "https://static.wixstatic.com/media/4b6b13_5edaa9f00afa4d2986f5fac84d8965e4~mv2_d_2700_1200_s_2.jpg",
+    "quality_auto/4b6b13_5edaa9f00afa4d2986f5fac84d8965e4~mv2_d_2700_1200_s_2.jpg"
+  ],
+  "downloaded": 2,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_3eeb5860ded34ba49ec1c27aef4d2065~mv2_d_2500_1200_s_2.jpg"
+    },
+    {
+      "url": "quality_auto/4b6b13_5edaa9f00afa4d2986f5fac84d8965e4~mv2_d_2700_1200_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_5edaa9f00afa4d2986f5fac84d8965e4~mv2_d_2700_1200_s_2.jpg"
+    }
+  ]
+}

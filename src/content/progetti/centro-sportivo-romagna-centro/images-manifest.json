@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:38:55.315Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti",
+  "slug": "centro-sportivo-romagna-centro",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_8e1fa5fd15d14ef88b8488d0560413dc~mv2.jpg",
+    "quality_auto/4b6b13_8e1fa5fd15d14ef88b8488d0560413dc~mv2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_8e1fa5fd15d14ef88b8488d0560413dc~mv2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_8e1fa5fd15d14ef88b8488d0560413dc~mv2.jpg"
+    }
+  ]
+}

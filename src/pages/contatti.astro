@@ -1,0 +1,569 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/seo/Breadcrumbs.astro';
+import { studio } from '@data/studio';
+
+const phoneTel = studio.contatti.telefono.replace(/\s/g, '');
+const cellTel = studio.contatti.cellulare.replace(/\s/g, '');
+
+// Coordinate per Via A. Saffi 62, Cesena (approssimate)
+const lat = 44.137;
+const lng = 12.243;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+---
+
+<BaseLayout
+  title="Contatti — Studio Arnaldo Montacuti, Cesena"
+  description="Studio Arnaldo Montacuti — Via A. Saffi 62, Cesena (FC). Scrivici per iniziare un progetto residenziale, commerciale o di riqualificazione."
+>
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contatti' }]} />
+
+  <header class="contatti-head container-editorial">
+    <p class="type-eyebrow contatti-head__eyebrow">Contatti</p>
+    <h1 class="type-display contatti-head__title">Parliamone.</h1>
+    <p class="type-body-lg contatti-head__intro">
+      Raccontaci il progetto. Bastano poche righe per capire come possiamo
+      esserti utili — ti rispondiamo entro 48 ore lavorative.
+    </p>
+  </header>
+
+  <section class="contatti container-editorial">
+    <div class="contatti__form-wrap" id="form">
+      <p class="type-eyebrow contatti__col-label">Modulo</p>
+      <form
+        class="contatti__form"
+        id="contact-form"
+        novalidate
+        aria-describedby="form-status"
+      >
+        <div class="contatti__row">
+          <label class="contatti__field">
+            <span class="contatti__label">Nome <span aria-hidden="true">*</span></span>
+            <input
+              type="text"
+              name="nome"
+              autocomplete="name"
+              required
+              minlength="2"
+              aria-required="true"
+            />
+            <span class="contatti__error" data-error-for="nome"></span>
+          </label>
+
+          <label class="contatti__field">
+            <span class="contatti__label">Email <span aria-hidden="true">*</span></span>
+            <input
+              type="email"
+              name="email"
+              autocomplete="email"
+              required
+              aria-required="true"
+            />
+            <span class="contatti__error" data-error-for="email"></span>
+          </label>
+        </div>
+
+        <div class="contatti__row">
+          <label class="contatti__field">
+            <span class="contatti__label">Telefono</span>
+            <input type="tel" name="telefono" autocomplete="tel" />
+          </label>
+
+          <label class="contatti__field">
+            <span class="contatti__label">Tipologia di progetto</span>
+            <select name="tipologia">
+              <option value="">Seleziona…</option>
+              <option value="residenziale">Residenziale</option>
+              <option value="commerciale-terziario">Commerciale e terziario</option>
+              <option value="riqualificazione">Riqualificazione</option>
+              <option value="altro">Altro</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="contatti__field contatti__field--block">
+          <span class="contatti__label">Messaggio <span aria-hidden="true">*</span></span>
+          <textarea
+            name="messaggio"
+            rows="6"
+            required
+            minlength="10"
+            placeholder="Raccontaci brevemente il progetto, la località e i tempi previsti."
+            aria-required="true"></textarea>
+          <span class="contatti__error" data-error-for="messaggio"></span>
+        </label>
+
+        <!-- Honeypot anti-bot, invisibile agli utenti reali -->
+        <div class="contatti__honeypot" aria-hidden="true">
+          <label>
+            Website
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+
+        <label class="contatti__privacy">
+          <input type="checkbox" name="privacy" required aria-required="true" />
+          <span class="type-body-sm">
+            Ho letto la <a href="/privacy">privacy policy</a> e acconsento al
+            trattamento dei dati per rispondere a questa richiesta. <span aria-hidden="true">*</span>
+          </span>
+          <span class="contatti__error" data-error-for="privacy"></span>
+        </label>
+
+        <div class="contatti__actions">
+          <button type="submit" class="contatti__submit" id="submit-btn">
+            <span class="contatti__submit-label">Invia richiesta</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <p class="type-caption contatti__required-note">
+            <span aria-hidden="true">*</span> Campi obbligatori
+          </p>
+        </div>
+
+        <p class="contatti__status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <aside class="contatti__info">
+      <p class="type-eyebrow contatti__col-label" id="info">Studio</p>
+      <address class="contatti__address">
+        <p class="type-body">
+          <strong>{studio.nome}</strong><br />
+          {studio.indirizzo.via}<br />
+          {studio.indirizzo.cap} {studio.indirizzo.citta} ({studio.indirizzo.provincia})
+        </p>
+        <p class="type-body contatti__contact">
+          <a href={`mailto:${studio.contatti.email}`}>{studio.contatti.email}</a>
+        </p>
+        <p class="type-body contatti__contact">
+          <span class="contatti__contact-label">T</span>
+          <a href={`tel:${phoneTel}`}>{studio.contatti.telefono}</a>
+        </p>
+        <p class="type-body contatti__contact">
+          <span class="contatti__contact-label">M</span>
+          <a href={`tel:${cellTel}`}>{studio.contatti.cellulare}</a>
+        </p>
+      </address>
+
+      <div class="contatti__map" aria-label="Mappa">
+        <div class="contatti__map-placeholder">
+          <p class="type-eyebrow contatti__map-eyebrow">Dove siamo</p>
+          <p class="type-body contatti__map-coords">
+            {studio.indirizzo.via}, {studio.indirizzo.citta}
+          </p>
+          <a class="contatti__map-link" href={mapsUrl} target="_blank" rel="noopener">
+            Apri su Google Maps
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status') as HTMLElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+  if (form && status && submitBtn) {
+    function setError(name: string, msg: string) {
+      const el = form!.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
+      if (el) el.textContent = msg;
+      const input = form!.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      if (input) input.setAttribute('aria-invalid', 'true');
+    }
+
+    function clearErrors() {
+      form!.querySelectorAll<HTMLElement>('[data-error-for]').forEach((el) => (el.textContent = ''));
+      form!.querySelectorAll<HTMLInputElement>('[aria-invalid]').forEach((el) =>
+        el.removeAttribute('aria-invalid'),
+      );
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+      status.textContent = '';
+      status.dataset.state = '';
+
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, FormDataEntryValue>;
+      const payload = {
+        nome: String(data.nome ?? '').trim(),
+        email: String(data.email ?? '').trim(),
+        telefono: String(data.telefono ?? '').trim(),
+        tipologia: String(data.tipologia ?? '').trim(),
+        messaggio: String(data.messaggio ?? '').trim(),
+        privacy: data.privacy === 'on',
+        website: String(data.website ?? '').trim(),
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.querySelector('.contatti__submit-label')!.textContent = 'Invio in corso…';
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const body = (await res.json()) as {
+          ok: boolean;
+          errors?: Record<string, string>;
+          error?: string;
+        };
+
+        if (body.ok) {
+          status.dataset.state = 'success';
+          status.textContent =
+            'Grazie. Abbiamo ricevuto la tua richiesta — ti rispondiamo entro 48 ore.';
+          form.reset();
+        } else if (body.errors) {
+          for (const [k, msg] of Object.entries(body.errors)) setError(k, msg);
+          status.dataset.state = 'error';
+          status.textContent = 'Controlla i campi segnalati.';
+        } else {
+          status.dataset.state = 'error';
+          status.textContent = body.error ?? 'Errore di invio. Riprova.';
+        }
+      } catch (err) {
+        status.dataset.state = 'error';
+        status.textContent = 'Errore di rete. Verifica la connessione e riprova.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('.contatti__submit-label')!.textContent = 'Invia richiesta';
+      }
+    });
+  }
+</script>
+
+<style>
+  .contatti-head {
+    padding-block: 4rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .contatti-head {
+      padding-block: 6rem 3rem;
+    }
+  }
+
+  .contatti-head__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .contatti-head__title {
+    margin-block-end: 2rem;
+    max-width: 14ch;
+  }
+
+  .contatti-head__intro {
+    color: var(--color-fg-muted);
+    max-width: 48ch;
+  }
+
+  /* ---- Layout ---- */
+  .contatti {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    padding-block: 3rem 8rem;
+  }
+
+  @media (min-width: 1024px) {
+    .contatti {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 5rem;
+      padding-block: 5rem 10rem;
+    }
+  }
+
+  .contatti__col-label {
+    color: var(--color-fg-subtle);
+    margin-block-end: 2rem;
+    padding-block-end: 1rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  /* ---- Form ---- */
+  .contatti__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .contatti__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .contatti__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .contatti__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contatti__field--block {
+    width: 100%;
+  }
+
+  .contatti__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+
+  .contatti__field input,
+  .contatti__field select,
+  .contatti__field textarea {
+    appearance: none;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: 0.875rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-fg);
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .contatti__field input:focus,
+  .contatti__field select:focus,
+  .contatti__field textarea:focus {
+    outline: none;
+    border-color: var(--color-fg);
+  }
+
+  .contatti__field input[aria-invalid='true'],
+  .contatti__field textarea[aria-invalid='true'] {
+    border-color: var(--color-accent);
+  }
+
+  .contatti__field textarea {
+    resize: vertical;
+    min-height: 8rem;
+    line-height: 1.5;
+  }
+
+  .contatti__field select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%230f0f0e' stroke-width='1.5'%3E%3Cpath d='M1 1l5 6 5-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.75rem;
+    padding-inline-end: 2.5rem;
+  }
+
+  .contatti__error {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    min-height: 1em;
+  }
+
+  .contatti__error:empty {
+    display: none;
+  }
+
+  /* Honeypot — nascosto agli utenti, visibile ai bot */
+  .contatti__honeypot {
+    position: absolute;
+    inset-inline-start: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  /* Privacy checkbox */
+  .contatti__privacy {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.75rem;
+    align-items: start;
+    padding-block-start: 0.5rem;
+  }
+
+  .contatti__privacy input[type='checkbox'] {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-block-start: 0.25rem;
+    accent-color: var(--color-fg);
+  }
+
+  .contatti__privacy a {
+    border-block-end: 1px solid var(--color-fg);
+  }
+
+  .contatti__privacy a:hover,
+  .contatti__privacy a:focus-visible {
+    color: var(--color-accent);
+    border-block-end-color: var(--color-accent);
+  }
+
+  .contatti__privacy .contatti__error {
+    grid-column: 2;
+  }
+
+  /* Submit */
+  .contatti__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block-start: 1rem;
+  }
+
+  .contatti__submit {
+    appearance: none;
+    background: var(--color-fg);
+    color: var(--color-bg);
+    border: 0;
+    padding: 1rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  .contatti__submit:hover:not(:disabled),
+  .contatti__submit:focus-visible {
+    background-color: var(--color-accent);
+  }
+
+  .contatti__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .contatti__required-note {
+    color: var(--color-fg-subtle);
+  }
+
+  .contatti__status {
+    margin-block-start: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .contatti__status[data-state='success'] {
+    color: var(--color-fg);
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-fg);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .contatti__status[data-state='error'] {
+    color: var(--color-accent);
+  }
+
+  /* ---- Info / address ---- */
+  .contatti__info {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .contatti__address {
+    font-style: normal;
+  }
+
+  .contatti__address p {
+    line-height: 1.55;
+  }
+
+  .contatti__address strong {
+    font-weight: 600;
+  }
+
+  .contatti__contact {
+    margin-block-start: 1rem !important;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .contatti__contact-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-fg-subtle);
+    width: 1ch;
+  }
+
+  .contatti__contact a {
+    text-decoration: none;
+    border-block-end: 1px solid var(--color-border);
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .contatti__contact a:hover,
+  .contatti__contact a:focus-visible {
+    border-block-end-color: var(--color-fg);
+  }
+
+  /* ---- Map placeholder ---- */
+  .contatti__map {
+    aspect-ratio: 4 / 3;
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .contatti__map-placeholder {
+    text-align: center;
+  }
+
+  .contatti__map-eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 0.75rem;
+  }
+
+  .contatti__map-coords {
+    color: var(--color-fg-muted);
+    margin-block-end: 1.5rem;
+  }
+
+  .contatti__map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    text-decoration: none;
+    border-block-end: 1px solid var(--color-fg);
+    padding-block-end: 0.25rem;
+    transition:
+      color var(--duration-fast) var(--ease-default),
+      border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .contatti__map-link:hover,
+  .contatti__map-link:focus-visible {
+    color: var(--color-accent);
+    border-block-end-color: var(--color-accent);
+  }
+</style>

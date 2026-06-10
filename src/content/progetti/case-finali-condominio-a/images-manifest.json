@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:40:23.254Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-appartamenti-via-dell-amor",
+  "slug": "case-finali-condominio-a",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_282caf20d8af48b2adfb5d5e7be639bd~mv2.jpg",
+    "quality_auto/4b6b13_282caf20d8af48b2adfb5d5e7be639bd~mv2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_282caf20d8af48b2adfb5d5e7be639bd~mv2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_282caf20d8af48b2adfb5d5e7be639bd~mv2.jpg"
+    }
+  ]
+}

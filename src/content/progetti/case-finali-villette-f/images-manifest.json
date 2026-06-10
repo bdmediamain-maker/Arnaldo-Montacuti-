@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:40:53.289Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-case-finali-condominio",
+  "slug": "case-finali-villette-f",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_be5eb42836d54ccaa309edaa24da360c~mv2_d_3309_2339_s_2.jpg",
+    "quality_auto/4b6b13_be5eb42836d54ccaa309edaa24da360c~mv2_d_3309_2339_s_2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_be5eb42836d54ccaa309edaa24da360c~mv2_d_3309_2339_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_be5eb42836d54ccaa309edaa24da360c~mv2_d_3309_2339_s_2.jpg"
+    }
+  ]
+}

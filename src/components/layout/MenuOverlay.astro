@@ -1,0 +1,320 @@
+---
+import { menuGroups, studio } from '@data/studio';
+---
+
+<div
+  id="menu-overlay"
+  class="menu-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="menu-overlay-title"
+  aria-hidden="true"
+  inert
+>
+  <div class="menu-overlay__inner container-editorial">
+    <header class="menu-overlay__header">
+      <p class="type-eyebrow" id="menu-overlay-title">Indice</p>
+      <button
+        id="menu-close"
+        class="menu-overlay__close"
+        type="button"
+        aria-label="Chiudi menu"
+      >
+        <span class="menu-overlay__close-label">Chiudi</span>
+        <span class="menu-overlay__close-icon" aria-hidden="true">
+          <span></span><span></span>
+        </span>
+      </button>
+    </header>
+
+    <nav class="menu-overlay__nav" aria-label="Menu principale">
+      {
+        menuGroups.map((group) => (
+          <section class="menu-overlay__group">
+            <p class="type-eyebrow menu-overlay__group-label">{group.eyebrow}</p>
+            <ul class="menu-overlay__list">
+              {group.items.map((item) => (
+                <li class="menu-overlay__item">
+                  <a class="menu-overlay__link" href={item.href}>
+                    <span class="menu-overlay__link-label">{item.label}</span>
+                    <span class="menu-overlay__link-arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </nav>
+
+    <footer class="menu-overlay__footer">
+      <div class="menu-overlay__contact">
+        <p class="type-eyebrow">Studio</p>
+        <p class="type-body-sm">
+          {studio.indirizzo.via} · {studio.indirizzo.citta} ({studio.indirizzo.provincia})
+        </p>
+        <p class="type-body-sm">
+          <a href={`tel:${studio.contatti.telefono.replace(/\s/g, '')}`}>
+            {studio.contatti.telefono}
+          </a>
+          {' · '}
+          <a href={`mailto:${studio.contatti.email}`}>{studio.contatti.email}</a>
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<style>
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-default) var(--ease-default);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .menu-overlay[aria-hidden='false'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .menu-overlay__inner {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-block: 1.25rem 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .menu-overlay__inner {
+      padding-block: 1.25rem 4rem;
+    }
+  }
+
+  .menu-overlay__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .menu-overlay__header {
+      height: 72px;
+    }
+  }
+
+  .menu-overlay__close {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    margin-inline-end: -0.75rem;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .menu-overlay__close-icon {
+    position: relative;
+    display: inline-block;
+    width: 22px;
+    height: 14px;
+  }
+
+  .menu-overlay__close-icon > span {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .menu-overlay__close-icon > span:nth-child(1) {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .menu-overlay__close-icon > span:nth-child(2) {
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  .menu-overlay__nav {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-block: 3rem;
+    align-content: start;
+  }
+
+  @media (min-width: 768px) {
+    .menu-overlay__nav {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4rem;
+      padding-block: 5rem 4rem;
+    }
+  }
+
+  .menu-overlay__group-label {
+    margin-block-end: 1.5rem;
+    color: var(--color-fg-subtle);
+  }
+
+  .menu-overlay__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .menu-overlay__item {
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .menu-overlay__link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--color-fg);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .menu-overlay__link-arrow {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-fg-subtle);
+    transform: translateX(0);
+    transition:
+      color var(--duration-fast) var(--ease-default),
+      transform var(--duration-default) var(--ease-out);
+  }
+
+  .menu-overlay__link:hover,
+  .menu-overlay__link:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .menu-overlay__link:hover .menu-overlay__link-arrow,
+  .menu-overlay__link:focus-visible .menu-overlay__link-arrow {
+    color: var(--color-accent);
+    transform: translateX(6px);
+  }
+
+  .menu-overlay__footer {
+    border-block-start: 1px solid var(--color-border);
+    padding-block-start: 2rem;
+    margin-block-start: auto;
+  }
+
+  .menu-overlay__contact p + p {
+    margin-block-start: 0.5rem;
+  }
+
+  .menu-overlay__contact a {
+    text-decoration: none;
+    border-block-end: 1px solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .menu-overlay__contact a:hover,
+  .menu-overlay__contact a:focus-visible {
+    border-block-end-color: var(--color-fg);
+  }
+</style>
+
+<script>
+  const trigger = document.getElementById('menu-trigger');
+  const overlay = document.getElementById('menu-overlay');
+  const closeBtn = document.getElementById('menu-close');
+
+  if (trigger && overlay && closeBtn) {
+    let lastFocused: HTMLElement | null = null;
+
+    const open = () => {
+      lastFocused = document.activeElement as HTMLElement | null;
+      overlay.removeAttribute('inert');
+      overlay.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+      document.body.dataset.menuOpen = 'true';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => closeBtn.focus());
+    };
+
+    const close = () => {
+      overlay.setAttribute('inert', '');
+      overlay.setAttribute('aria-hidden', 'true');
+      trigger.setAttribute('aria-expanded', 'false');
+      delete document.body.dataset.menuOpen;
+      document.body.style.overflow = '';
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      } else {
+        trigger.focus();
+      }
+    };
+
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      if (expanded) close();
+      else open();
+    });
+
+    closeBtn.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        close();
+      }
+    });
+
+    // Close when clicking a link (allow soft transitions on internal nav)
+    overlay.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((link) => {
+      link.addEventListener('click', () => {
+        // wait a tick so navigation starts, then close to clear state
+        setTimeout(close, 50);
+      });
+    });
+
+    // Focus trap (basic — wraps tab order inside overlay when open)
+    overlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusables = overlay.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
+</script>

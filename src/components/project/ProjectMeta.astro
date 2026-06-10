@@ -1,0 +1,89 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { metaLabel, metaOrder } from '@lib/labels';
+
+interface Props {
+  progetto: CollectionEntry<'progetti'>;
+}
+const { progetto } = Astro.props;
+const { meta } = progetto.data;
+
+// Filtra solo i campi popolati, mantenendo l'ordine canonico
+const m = meta as Record<string, string | undefined>;
+const rows: Array<{ key: string; label: string; value: string }> = [];
+for (const key of metaOrder) {
+  const value = m[key];
+  if (value) rows.push({ key, label: metaLabel[key], value });
+}
+---
+
+<section class="project-meta container-editorial" aria-labelledby="project-meta-title">
+  <p class="type-eyebrow project-meta__head" id="project-meta-title">Scheda progetto</p>
+  <dl class="project-meta__list">
+    {
+      rows.map((row) => (
+        <div class="project-meta__row">
+          <dt class="type-eyebrow project-meta__label">{row.label}</dt>
+          <dd class="type-body project-meta__value">{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .project-meta {
+    padding-block: 5rem;
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .project-meta {
+      padding-block: 7rem;
+    }
+  }
+
+  .project-meta__head {
+    color: var(--color-fg-subtle);
+    margin-block-end: 2rem;
+  }
+
+  .project-meta__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+  }
+
+  .project-meta__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    padding-block: 1.25rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .project-meta__row:first-child {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .project-meta__row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      gap: 2rem;
+      padding-block: 1.5rem;
+      align-items: baseline;
+    }
+  }
+
+  .project-meta__label {
+    color: var(--color-fg-muted);
+    margin: 0;
+  }
+
+  .project-meta__value {
+    margin: 0;
+    color: var(--color-fg);
+    line-height: 1.5;
+  }
+</style>

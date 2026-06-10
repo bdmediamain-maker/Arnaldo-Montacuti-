@@ -1,0 +1,273 @@
+{
+  "generated_at": "2026-06-10T13:53:32.486Z",
+  "projects": {
+    "case-finali-condominio-a": {
+      "count": 1,
+      "totalKB": 1459,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 1459,
+          "sha1": "34ec1d099258"
+        }
+      ]
+    },
+    "case-finali-condominio-l": {
+      "count": 1,
+      "totalKB": 1540,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 1540,
+          "sha1": "b18d7297447d"
+        }
+      ]
+    },
+    "case-finali-villette-de": {
+      "count": 1,
+      "totalKB": 3563,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 3563,
+          "sha1": "698b0b9f675b"
+        }
+      ]
+    },
+    "case-finali-villette-f": {
+      "count": 1,
+      "totalKB": 4046,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 4046,
+          "sha1": "02b49a2848ca"
+        }
+      ]
+    },
+    "case-finali-villette-m": {
+      "count": 1,
+      "totalKB": 2210,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 2210,
+          "sha1": "9e7a9630c3ae"
+        }
+      ]
+    },
+    "centro-sportivo-romagna-centro": {
+      "count": 1,
+      "totalKB": 1963,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 1963,
+          "sha1": "a02162fcd460"
+        }
+      ]
+    },
+    "conad-ponte-abbadesse": {
+      "count": 1,
+      "totalKB": 1323,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 1323,
+          "sha1": "58352f1de448"
+        }
+      ]
+    },
+    "ex-ristorante-gianni": {
+      "count": 1,
+      "totalKB": 4076,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 4076,
+          "sha1": "d4912fa1a64a"
+        }
+      ]
+    },
+    "famila-gambettola": {
+      "count": 1,
+      "totalKB": 3903,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 3903,
+          "sha1": "b0ecc88b5d03"
+        }
+      ]
+    },
+    "hera-pievesestina": {
+      "count": 1,
+      "totalKB": 555,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 555,
+          "sha1": "d690832efc6a"
+        }
+      ]
+    },
+    "parco-giardino-condomini": {
+      "count": 2,
+      "totalKB": 3126,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 1744,
+          "sha1": "422b7190bf44"
+        },
+        {
+          "name": "02-3eeb5860ded3.jpg",
+          "sizeKB": 1382,
+          "sha1": "1ba64464f304"
+        }
+      ]
+    },
+    "parco-giardino-villette": {
+      "count": 2,
+      "totalKB": 12806,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 11424,
+          "sha1": "a75057370d74"
+        },
+        {
+          "name": "02-3eeb5860ded3.jpg",
+          "sizeKB": 1382,
+          "sha1": "1ba64464f304"
+        }
+      ]
+    },
+    "quartiere-cesuola": {
+      "count": 1,
+      "totalKB": 717,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 717,
+          "sha1": "4b65267e3afe"
+        }
+      ]
+    },
+    "riqualificazione-via-battisti": {
+      "count": 1,
+      "totalKB": 3714,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 3714,
+          "sha1": "9ff59cd1c9fe"
+        }
+      ]
+    },
+    "salaroli-cesena": {
+      "count": 1,
+      "totalKB": 10121,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 10121,
+          "sha1": "f7186c1a3ee1"
+        }
+      ]
+    },
+    "stabilimento-siderurgico": {
+      "count": 1,
+      "totalKB": 4944,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 4944,
+          "sha1": "817e6b142e4e"
+        }
+      ]
+    },
+    "torre-del-moro": {
+      "count": 1,
+      "totalKB": 7251,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 7251,
+          "sha1": "85b9ac6c47af"
+        }
+      ]
+    },
+    "via-dismano-bifamiliari-a": {
+      "count": 1,
+      "totalKB": 2297,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 2297,
+          "sha1": "e1d9e832aeef"
+        }
+      ]
+    },
+    "via-dismano-villa-b1": {
+      "count": 1,
+      "totalKB": 4939,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 4939,
+          "sha1": "621dca96aa43"
+        }
+      ]
+    },
+    "via-dismano-villa-b2": {
+      "count": 1,
+      "totalKB": 3600,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 3600,
+          "sha1": "86058956f703"
+        }
+      ]
+    },
+    "via-natale-amore": {
+      "count": 1,
+      "totalKB": 4680,
+      "files": [
+        {
+          "name": "01-hero.jpg",
+          "sizeKB": 4680,
+          "sha1": "35a98940484b"
+        }
+      ]
+    }
+  },
+  "assets": [
+    {
+      "path": "home/contact-hero.jpg",
+      "sizeKB": 1990,
+      "sha1": "d904aa90aa07"
+    },
+    {
+      "path": "home/home-hero.jpg",
+      "sizeKB": 8664,
+      "sha1": "1272f136b029"
+    },
+    {
+      "path": "studio/arnaldo-portrait.jpg",
+      "sizeKB": 90,
+      "sha1": "c0c8389f4fff"
+    },
+    {
+      "path": "studio/portrait-vertical.jpg",
+      "sizeKB": 7059,
+      "sha1": "3383c8c040f6"
+    }
+  ],
+  "totals": {
+    "files": 27,
+    "totalMB": 98.3,
+    "projectsWithImages": 21
+  }
+}

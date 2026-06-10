@@ -1,0 +1,79 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectHero from '@components/project/ProjectHero.astro';
+import ProjectMeta from '@components/project/ProjectMeta.astro';
+import ProjectBody from '@components/project/ProjectBody.astro';
+import Pullquote from '@components/project/Pullquote.astro';
+import ProjectSpecs from '@components/project/ProjectSpecs.astro';
+import RelatedProjects from '@components/project/RelatedProjects.astro';
+import PlanYourProjectCTA from '@components/cta/PlanYourProjectCTA.astro';
+import Breadcrumbs from '@components/seo/Breadcrumbs.astro';
+import SchemaProject from '@components/seo/SchemaProject.astro';
+
+export async function getStaticPaths() {
+  const all = await getCollection('progetti', (p) => !p.data.draft);
+  return all.map((progetto) => ({
+    params: { slug: progetto.id },
+    props: { progetto },
+  }));
+}
+
+interface Props {
+  progetto: CollectionEntry<'progetti'>;
+}
+
+const { progetto } = Astro.props;
+const { Content } = await render(progetto);
+const { data } = progetto;
+
+const title = data.seo?.title ?? `${data.titolo} — Studio Arnaldo Montacuti`;
+const description =
+  data.seo?.description ??
+  `${data.titolo}: progetto ${data.stato} a ${data.meta.localizzazione}, anno ${data.anno}.`;
+
+// Genera URL og:image assoluto dalla hero del progetto
+const ogImageGenerated = await getImage({
+  src: data.hero,
+  width: 1200,
+  height: 630,
+  format: 'jpg',
+  quality: 82,
+});
+const siteUrl = Astro.site ?? new URL('https://studiomontacuti.it');
+const heroAbsolute = new URL(ogImageGenerated.src, siteUrl).toString();
+---
+
+<BaseLayout title={title} description={description} ogImage={heroAbsolute} edgeToEdge>
+  <SchemaProject slot="head-extra" progetto={progetto} heroAbsoluteUrl={heroAbsolute} />
+
+  <Breadcrumbs
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Progetti', href: '/progetti' },
+      { label: progetto.data.titolo },
+    ]}
+  />
+
+  <ProjectHero progetto={progetto} />
+  <ProjectMeta progetto={progetto} />
+  <ProjectBody>
+    <Content />
+  </ProjectBody>
+
+  {
+    data.pullquote && (
+      <Pullquote
+        text={data.pullquote.text}
+        author={data.pullquote.author}
+        role={data.pullquote.role}
+      />
+    )
+  }
+
+  {data.specs && data.specs.length > 0 && <ProjectSpecs specs={data.specs} />}
+
+  <PlanYourProjectCTA />
+  <RelatedProjects current={progetto} />
+</BaseLayout>

@@ -1,0 +1,344 @@
+/* ----------------------------------------------------------------------------
+ * MONTACUTI — Design Tokens & Base Styles
+ * Astro 5 + Tailwind 4 (CSS-first config)
+ * --------------------------------------------------------------------------*/
+
+@import './fonts.css';
+@import 'tailwindcss';
+
+/* ----------------------------------------------------------------------------
+ * Theme — Tailwind 4 token registration (exposes utilities like bg-bg, text-fg)
+ * --------------------------------------------------------------------------*/
+
+@theme {
+  /* ---- Colors ---- */
+  --color-bg: #fafaf7;
+  --color-bg-subtle: #f4f2ec;
+  --color-bg-elevated: #ffffff;
+
+  --color-fg: #0f0f0e;
+  --color-fg-muted: #5b5b58;
+  --color-fg-subtle: #8e8e8a;
+
+  --color-border: #e5e3dc;
+  --color-border-strong: #1a1a18;
+
+  --color-accent: #b14a2c;
+  --color-accent-hover: #9c3f24;
+  --color-accent-subtle: #f4e7e0;
+
+  --color-state-realized: #1a1a18;
+  --color-state-in-progress: #b14a2c;
+  --color-state-concept: #8e8e8a;
+
+  /* ---- Font families ---- */
+  --font-serif: 'Fraunces', 'Times New Roman', Georgia, serif;
+  --font-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* ---- Breakpoints (extending defaults) ---- */
+  --breakpoint-3xl: 1920px;
+
+  /* ---- Container ---- */
+  --container-max: 1440px;
+
+  /* ---- Radius — squared editorial ---- */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* ---- Transitions ---- */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-default: 300ms;
+  --duration-slow: 600ms;
+  --duration-image-reveal: 1200ms;
+}
+
+/* ----------------------------------------------------------------------------
+ * Base — reset & defaults
+ * --------------------------------------------------------------------------*/
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-border);
+  }
+
+  html {
+    /* base 16px, type scale uses rem */
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-feature-settings:
+      'kern' 1,
+      'liga' 1,
+      'calt' 1;
+  }
+
+  /* Headings default to serif, weight controlled per scale */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    margin: 0;
+    color: var(--color-fg);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  picture,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  ::selection {
+    background-color: var(--color-fg);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-fg);
+    outline-offset: 3px;
+  }
+
+  /* Skip to content target */
+  [tabindex='-1']:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * Typography — utility classes for the editorial type scale
+ * (per montacuti-brief.md §4.2)
+ * --------------------------------------------------------------------------*/
+
+@layer components {
+  .type-display {
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .type-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 350;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variation-settings: 'opsz' 96;
+  }
+
+  .type-h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-variation-settings: 'opsz' 72;
+  }
+
+  .type-h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 36;
+  }
+
+  .type-body-lg {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .type-body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  .type-body-sm {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .type-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+
+  .type-caption {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-fg-muted);
+  }
+
+  /* ----- Layout primitives ----- */
+
+  .container-editorial {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-editorial {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-editorial {
+      padding-inline: 4rem;
+    }
+  }
+
+  .section-y {
+    padding-block: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-y {
+      padding-block: 8rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-block: 10rem;
+    }
+  }
+
+  .prose-editorial {
+    max-width: 68ch;
+  }
+
+  .prose-editorial > * + * {
+    margin-top: 1.5em;
+  }
+
+  /* ----- Skip link ----- */
+
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 100;
+    background: var(--color-fg);
+    color: var(--color-bg);
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: top var(--duration-fast) var(--ease-default);
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * Reveal animations (IntersectionObserver-driven)
+ *
+ * Default reveal: opacity + translateY. Trigger via [data-revealed="true"]
+ * settato lato JS dall'observer.
+ * Variant: --image (clip-path wipe da destra → sinistra)
+ *
+ * Fuori da @layer components per evitare conflitti di cascade con Tailwind 4.
+ * --------------------------------------------------------------------------*/
+
+.reveal {
+  --reveal-o: 0;
+  --reveal-y: 14px;
+  opacity: var(--reveal-o);
+  transform: translateY(var(--reveal-y));
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal--image {
+  --reveal-clip: inset(0 100% 0 0);
+  clip-path: var(--reveal-clip);
+  transition: clip-path var(--duration-image-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal--fade {
+  --reveal-y: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal--image,
+  .reveal--fade {
+    --reveal-o: 1;
+    --reveal-y: 0;
+    --reveal-clip: none;
+    transition: none;
+  }
+}

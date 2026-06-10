@@ -1,0 +1,132 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectCard from '@components/project/ProjectCard.astro';
+import ProjectFilters from '@components/project/ProjectFilters.astro';
+import Breadcrumbs from '@components/seo/Breadcrumbs.astro';
+import { listProgetti } from '@lib/projects';
+
+const progetti = await listProgetti();
+
+// Anni unici ordinati desc per il filtro
+const anni = Array.from(
+  new Set(
+    progetti.map((p) => {
+      const a = p.data.anno;
+      return typeof a === 'number' ? a : parseInt(String(a), 10);
+    }),
+  ),
+)
+  .filter((n) => Number.isFinite(n))
+  .sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title="Progetti — Studio Arnaldo Montacuti"
+  description="Tutti i progetti dello Studio Montacuti: opere residenziali, commerciali e di riqualificazione urbana in Cesena e in Romagna."
+>
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Progetti' }]} />
+
+  <header class="progetti-head container-editorial">
+    <p class="type-eyebrow progetti-head__eyebrow">Portfolio</p>
+    <h1 class="type-display progetti-head__title">Progetti</h1>
+    <p class="type-body-lg progetti-head__intro">
+      Opere realizzate e in corso tra Cesena e la Romagna — dalla residenza alla
+      grande distribuzione, dalla sede direzionale alla riqualificazione del
+      fronte urbano.
+    </p>
+  </header>
+
+  <section class="container-editorial">
+    <ProjectFilters anni={anni} totale={progetti.length} />
+
+    <div class="progetti-grid" id="progetti-grid">
+      {
+        progetti.map((p) => (
+          <div
+            class="progetti-grid__item"
+            data-progetto-card
+            data-categoria={p.data.categoria}
+            data-stato={p.data.stato}
+            data-anno={p.data.anno}
+          >
+            <ProjectCard progetto={p} aspect="4/3" />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="progetti-empty container-editorial" id="progetti-empty" hidden>
+      <p class="type-eyebrow progetti-empty__eyebrow">Nessun risultato</p>
+      <p class="type-body progetti-empty__body">
+        Nessun progetto corrisponde ai filtri selezionati. Prova a rimuovere uno
+        dei filtri o a resettare.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .progetti-head {
+    padding-block: 4rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .progetti-head {
+      padding-block: 6rem 3rem;
+    }
+  }
+
+  .progetti-head__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .progetti-head__title {
+    margin-block-end: 2rem;
+  }
+
+  .progetti-head__intro {
+    color: var(--color-fg-muted);
+    max-width: 56ch;
+  }
+
+  .progetti-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem 2rem;
+    padding-block: 4rem 6rem;
+  }
+
+  @media (min-width: 640px) {
+    .progetti-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .progetti-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4rem 2.5rem;
+    }
+  }
+
+  .progetti-grid__item[hidden] {
+    display: none !important;
+  }
+
+  .progetti-empty {
+    padding-block: 4rem 8rem;
+    text-align: center;
+  }
+
+  .progetti-empty__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1rem;
+  }
+
+  .progetti-empty__body {
+    max-width: 40ch;
+    margin-inline: auto;
+    color: var(--color-fg-muted);
+  }
+</style>

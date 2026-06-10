@@ -1,0 +1,367 @@
+---
+/**
+ * /studio — Lo Studio
+ *
+ * NOTA: il copy è una BOZZA editoriale costruita su quanto deducibile
+ * dal portfolio (collab Gae Aulenti, opere note, scala territoriale).
+ * Va riscritto con il cliente per: anno laurea, università, iscrizione
+ * albo, anno fondazione studio, eventuali docenze/pubblicazioni/premi.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PlanYourProjectCTA from '@components/cta/PlanYourProjectCTA.astro';
+import Breadcrumbs from '@components/seo/Breadcrumbs.astro';
+import portrait from '@/assets/studio/portrait-vertical.jpg';
+import { listProgetti } from '@lib/projects';
+
+const progetti = await listProgetti();
+const fattiStudio = [
+  { num: '~40', label: 'Anni di attività' },
+  { num: String(progetti.length).padStart(2, '0'), label: 'Progetti pubblicati' },
+  { num: '01', label: 'Collaborazione con Gae Aulenti' },
+  { num: '03', label: 'Categorie di intervento' },
+];
+---
+
+<BaseLayout
+  title="Lo Studio — Arnaldo Montacuti, Architetto a Cesena"
+  description="Lo studio dell'architetto Arnaldo Montacuti opera da Cesena. Bio, filosofia progettuale, collaborazioni di rilievo (Gae Aulenti) e numeri dello studio."
+>
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Lo studio' }]} />
+
+  <header class="studio-head container-editorial">
+    <p class="type-eyebrow studio-head__eyebrow">Lo studio</p>
+    <h1 class="type-display studio-head__title">Arnaldo Montacuti, architetto a Cesena.</h1>
+  </header>
+
+  <section class="studio-portrait container-editorial" aria-label="Ritratto">
+    <figure class="studio-portrait__figure">
+      <Image
+        src={portrait}
+        alt="Ritratto dell'architetto Arnaldo Montacuti"
+        widths={[480, 720, 1080]}
+        sizes="(min-width: 1024px) 40vw, 90vw"
+        quality={82}
+        class="studio-portrait__img"
+      />
+    </figure>
+    <aside class="studio-portrait__bio">
+      <p class="type-body-lg studio-portrait__lede">
+        Lo studio dell'architetto <strong>Arnaldo Montacuti</strong> opera da Cesena su
+        progetti residenziali, commerciali e di riqualificazione urbana, in
+        continuità con il territorio della Romagna.
+      </p>
+      <p class="type-body studio-portrait__body">
+        Dal 1985 lo studio ha realizzato edifici per <strong>brand della grande
+        distribuzione</strong> (Conad, Famila), <strong>complessi residenziali</strong> di
+        diversa scala (Case Finali, Parco Giardino, Via Dismano), interventi di
+        <strong>riqualificazione urbana</strong> (Via Cesare Battisti, Quartiere
+        Cesuola) e la <strong>sede direzionale dell'Igiene Ambientale Hera</strong> a
+        Pievesestina, progettata con l'architetto Gae Aulenti.
+      </p>
+    </aside>
+  </section>
+
+  <section class="studio-philo" id="filosofia" aria-labelledby="philo-title">
+    <div class="container-editorial studio-philo__inner">
+      <p class="type-eyebrow studio-philo__eyebrow">Filosofia progettuale</p>
+      <h2 class="type-h2 studio-philo__title" id="philo-title">
+        Leggere il contesto. Scegliere materiali di lunga durata. Lavorare senza scorciatoie.
+      </h2>
+      <div class="studio-philo__body">
+        <p class="type-body">
+          Ogni progetto parte da una lettura puntuale del contesto: l'orientamento
+          rispetto al sole e al vento, le visuali, la natura del suolo, il
+          rapporto con il fronte urbano o con il paesaggio agricolo. La
+          progettazione non è uno stile sovrapposto al luogo, ma una risposta
+          coerente alle condizioni di partenza.
+        </p>
+        <p class="type-body">
+          La scelta dei materiali è guidata dalla durata nel tempo. Pietra
+          naturale, prefabbricato in c.a. facciavista, legno strutturale,
+          serramenti a taglio termico: ogni componente è selezionato in funzione
+          di come invecchierà nei dieci, venti, cinquant'anni di vita
+          dell'edificio.
+        </p>
+        <p class="type-body">
+          La relazione con il committente è diretta e duratura: dall'analisi
+          delle esigenze fino al collaudo, lo studio segue ogni fase senza
+          delegare a passaggi intermedi non necessari. La direzione lavori — sia
+          su progetti propri sia su progetti firmati da terzi (come nel caso
+          della collaborazione con Gae Aulenti) — è il momento in cui le scelte
+          architettoniche si verificano sul cantiere reale.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="studio-collab" id="collaborazioni" aria-labelledby="collab-title">
+    <div class="container-editorial">
+      <p class="type-eyebrow studio-collab__eyebrow">Collaborazioni</p>
+      <h2 class="type-h2 studio-collab__title" id="collab-title">
+        Con Gae Aulenti — sede Hera, Pievesestina (2013)
+      </h2>
+      <p class="type-body studio-collab__body">
+        La collaborazione più rilevante della storia dello studio è la direzione
+        lavori generale della <strong>nuova sede dell'Igiene Ambientale Hera</strong> a
+        Pievesestina, su progetto architettonico dell'arch. <strong>Gae Aulenti</strong>
+        (Milano). Lo studio Montacuti, attraverso l'ufficio Ottagono, ha gestito
+        l'intera cantierizzazione, le varianti in corso d'opera e l'interfaccia
+        tra il disegno milanese e le condizioni del cantiere romagnolo.
+        Un'esperienza che ha definito un capitolo del modo in cui lo studio
+        affronta l'architettura industriale: come atto culturale prima che
+        funzionale.
+      </p>
+      <a class="studio-collab__cta" href="/progetti/hera-pievesestina">
+        Vedi il progetto
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="studio-facts" aria-labelledby="facts-title">
+    <div class="container-editorial">
+      <p class="type-eyebrow studio-facts__eyebrow" id="facts-title">Numeri</p>
+      <ul class="studio-facts__grid">
+        {
+          fattiStudio.map((f) => (
+            <li class="studio-facts__item">
+              <p class="studio-facts__num">{f.num}</p>
+              <p class="studio-facts__label">{f.label}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <PlanYourProjectCTA />
+</BaseLayout>
+
+<style>
+  .studio-head {
+    padding-block: 4rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .studio-head {
+      padding-block: 6rem 3rem;
+    }
+  }
+
+  .studio-head__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .studio-head__title {
+    max-width: 14ch;
+  }
+
+  /* ---- Portrait + bio ---- */
+  .studio-portrait {
+    padding-block: 3rem 6rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .studio-portrait {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 5rem;
+      align-items: start;
+      padding-block: 4rem 10rem;
+    }
+  }
+
+  .studio-portrait__figure {
+    margin: 0;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: var(--color-bg-subtle);
+  }
+
+  .studio-portrait__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (min-width: 1024px) {
+    .studio-portrait__bio {
+      padding-block-start: 2rem;
+    }
+  }
+
+  .studio-portrait__lede {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 350;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+    margin-block-end: 2rem;
+    max-width: 28ch;
+  }
+
+  .studio-portrait__lede strong {
+    font-weight: 500;
+  }
+
+  .studio-portrait__body {
+    color: var(--color-fg-muted);
+    max-width: 56ch;
+  }
+
+  .studio-portrait__body strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  /* ---- Filosofia ---- */
+  .studio-philo {
+    background-color: var(--color-bg-subtle);
+    border-block: 1px solid var(--color-border);
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .studio-philo {
+      padding-block: 10rem;
+    }
+  }
+
+  .studio-philo__inner {
+    max-width: 80ch;
+  }
+
+  .studio-philo__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .studio-philo__title {
+    margin-block-end: 3rem;
+    max-width: 22ch;
+  }
+
+  .studio-philo__body > p + p {
+    margin-block-start: 1.5em;
+  }
+
+  /* ---- Collaborazioni ---- */
+  .studio-collab {
+    padding-block: 6rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .studio-collab {
+      padding-block: 9rem;
+    }
+  }
+
+  .studio-collab__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 1.5rem;
+  }
+
+  .studio-collab__title {
+    margin-block-end: 2.5rem;
+    max-width: 22ch;
+  }
+
+  .studio-collab__body {
+    color: var(--color-fg-muted);
+    max-width: 56ch;
+    margin-block-end: 2.5rem;
+  }
+
+  .studio-collab__body strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  .studio-collab__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    text-decoration: none;
+    border-block-end: 1px solid var(--color-fg);
+    padding-block-end: 0.25rem;
+    transition:
+      color var(--duration-fast) var(--ease-default),
+      border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .studio-collab__cta:hover,
+  .studio-collab__cta:focus-visible {
+    color: var(--color-accent);
+    border-block-end-color: var(--color-accent);
+  }
+
+  /* ---- Numeri ---- */
+  .studio-facts {
+    padding-block: 6rem;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .studio-facts {
+      padding-block: 9rem;
+    }
+  }
+
+  .studio-facts__eyebrow {
+    color: var(--color-fg-subtle);
+    margin-block-end: 3rem;
+  }
+
+  .studio-facts__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .studio-facts__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4rem 2rem;
+    }
+  }
+
+  .studio-facts__item {
+    border-block-start: 1px solid var(--color-border);
+    padding-block-start: 1.25rem;
+  }
+
+  .studio-facts__num {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 350;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+    margin-block-end: 0.75rem;
+  }
+
+  .studio-facts__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+/**
+ * ProjectBody — wrapper editoriale per il rendering del Markdown del progetto.
+ * Supporta immagini interleaved (Pattern 6) usando i selettori prose- per
+ * estrarre le <img> dal flow del testo e portarle a full-width container.
+ */
+interface Props {
+  /** L'output del <Content /> del file MDX/MD del progetto */
+  contentHtmlSlot?: never;
+}
+---
+
+<section class="project-body container-editorial" aria-label="Descrizione del progetto">
+  <article class="project-body__article">
+    <slot />
+  </article>
+</section>
+
+<style is:global>
+  .project-body {
+    padding-block-end: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .project-body {
+      padding-block-end: 6rem;
+    }
+  }
+
+  .project-body__article {
+    max-width: 100%;
+  }
+
+  /* Testo: max 68ch, centrato */
+  .project-body__article > p,
+  .project-body__article > h2,
+  .project-body__article > h3,
+  .project-body__article > h4,
+  .project-body__article > ul,
+  .project-body__article > ol,
+  .project-body__article > blockquote {
+    max-width: 68ch;
+    margin-inline: auto;
+  }
+
+  .project-body__article > h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-block: 3.5rem 1.5rem;
+  }
+
+  .project-body__article > h2:first-child {
+    margin-block-start: 0;
+  }
+
+  .project-body__article > h3 {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-block: 2.5rem 1rem;
+  }
+
+  .project-body__article > p {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    margin-block: 0 1.25em;
+    color: var(--color-fg);
+  }
+
+  .project-body__article > p > strong {
+    font-weight: 600;
+  }
+
+  /* Immagini interleaved: escono dal max-width prose */
+  .project-body__article > p > img,
+  .project-body__article > img,
+  .project-body__article > figure {
+    max-width: none;
+    width: 100%;
+    margin-block: 3.5rem;
+    display: block;
+  }
+
+  .project-body__article > figure > figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+    margin-block-start: 0.75rem;
+    max-width: 68ch;
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  .project-body__article > ul,
+  .project-body__article > ol {
+    padding-inline-start: 1.25rem;
+    margin-block: 1.5rem;
+  }
+
+  .project-body__article > ul > li,
+  .project-body__article > ol > li {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    margin-block: 0.5em;
+  }
+</style>

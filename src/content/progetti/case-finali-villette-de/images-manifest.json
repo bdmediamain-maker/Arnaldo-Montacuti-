@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:41:08.337Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/copia-di-case-finali-villette",
+  "slug": "case-finali-villette-de",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_fcbc198e0c1f4aa58138e5d900c47446~mv2_d_3309_2339_s_2.jpg",
+    "quality_auto/4b6b13_fcbc198e0c1f4aa58138e5d900c47446~mv2_d_3309_2339_s_2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_fcbc198e0c1f4aa58138e5d900c47446~mv2_d_3309_2339_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_fcbc198e0c1f4aa58138e5d900c47446~mv2_d_3309_2339_s_2.jpg"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+---
+/**
+ * Home Hero (Pattern 2 — here-away adattato)
+ *
+ * NIENTE hero fotografico unico: la FeaturedRow che segue immediatamente
+ * funge da "hero collettivo". Qui solo tipografia editoriale grande:
+ * eyebrow studio, payoff display, sotto-headline.
+ */
+interface Props {
+  eyebrow?: string;
+  headline?: string;
+  payoff?: string;
+}
+const {
+  eyebrow = 'Studio Arnaldo Montacuti · Cesena',
+  headline = "L'architettura come servizio alla città.",
+  payoff = 'Trent\'anni di progetti tra residenza, commercio e spazio pubblico — in Romagna.',
+} = Astro.props;
+
+---
+
+<section class="home-hero">
+  <div class="home-hero__inner container-editorial">
+    <p class="type-eyebrow home-hero__eyebrow reveal">{eyebrow}</p>
+    <h1 class="type-display home-hero__title reveal" style="--reveal-delay: 100ms;">{headline}</h1>
+    <p class="type-body-lg home-hero__payoff reveal" style="--reveal-delay: 220ms;">{payoff}</p>
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    padding-block: 5rem 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .home-hero {
+      padding-block: 8rem 5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero {
+      padding-block: 10rem 6rem;
+    }
+  }
+
+  .home-hero__eyebrow {
+    color: var(--color-fg-muted);
+    margin-block-end: 2rem;
+  }
+
+  .home-hero__title {
+    margin-block-end: 3rem;
+    max-width: 14ch;
+  }
+
+  .home-hero__payoff {
+    color: var(--color-fg-muted);
+    max-width: 38ch;
+    line-height: 1.45;
+  }
+</style>

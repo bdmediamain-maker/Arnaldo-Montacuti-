@@ -1,0 +1,84 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Pagina non trovata — Studio Arnaldo Montacuti"
+  description="La pagina che cerchi non esiste o è stata spostata."
+  noindex
+>
+  <section class="container-editorial notfound">
+    <p class="type-eyebrow notfound__eyebrow">Errore 404</p>
+    <h1 class="type-display notfound__title">Questa pagina non c'è.</h1>
+    <p class="type-body-lg notfound__body">
+      Forse l'indirizzo è cambiato o il link che ti ha portato qui non è
+      più valido. Da qui puoi tornare alla home, sfogliare il portfolio
+      o scriverci.
+    </p>
+    <ul class="notfound__links">
+      <li><a class="notfound__link" href="/">Home →</a></li>
+      <li><a class="notfound__link" href="/progetti">Progetti →</a></li>
+      <li><a class="notfound__link" href="/studio">Lo studio →</a></li>
+      <li><a class="notfound__link" href="/contatti">Contatti →</a></li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block: 8rem 12rem;
+    max-width: 60ch;
+  }
+
+  @media (min-width: 768px) {
+    .notfound {
+      padding-block: 12rem 16rem;
+    }
+  }
+
+  .notfound__eyebrow {
+    color: var(--color-accent);
+    margin-block-end: 2rem;
+  }
+
+  .notfound__title {
+    margin-block-end: 2.5rem;
+    max-width: 14ch;
+  }
+
+  .notfound__body {
+    color: var(--color-fg-muted);
+    margin-block-end: 3rem;
+    max-width: 48ch;
+  }
+
+  .notfound__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+  }
+
+  .notfound__link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    text-decoration: none;
+    border-block-end: 1px solid var(--color-fg);
+    padding-block-end: 0.25rem;
+    transition:
+      color var(--duration-fast) var(--ease-default),
+      border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .notfound__link:hover,
+  .notfound__link:focus-visible {
+    color: var(--color-accent);
+    border-block-end-color: var(--color-accent);
+  }
+</style>

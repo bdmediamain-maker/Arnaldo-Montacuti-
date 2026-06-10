@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:39:09.840Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/project-4",
+  "slug": "famila-gambettola",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_bf7e38e69e0c455aa4c2735354d833f6~mv2_d_4195_1843_s_2.jpg",
+    "quality_auto/4b6b13_bf7e38e69e0c455aa4c2735354d833f6~mv2_d_4195_1843_s_2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_bf7e38e69e0c455aa4c2735354d833f6~mv2_d_4195_1843_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_bf7e38e69e0c455aa4c2735354d833f6~mv2_d_4195_1843_s_2.jpg"
+    }
+  ]
+}

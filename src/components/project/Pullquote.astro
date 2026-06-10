@@ -1,0 +1,84 @@
+---
+interface Props {
+  text: string;
+  author: string;
+  role?: string;
+}
+const { text, author, role } = Astro.props;
+---
+
+<aside class="pullquote container-editorial reveal" aria-label="Citazione">
+  <blockquote class="pullquote__quote">
+    <span class="pullquote__mark" aria-hidden="true">&ldquo;</span>
+    <p class="pullquote__text">{text}</p>
+  </blockquote>
+  <p class="pullquote__attribution type-body-sm">
+    <span class="pullquote__dash" aria-hidden="true">—</span>
+    {author}{role && <span class="pullquote__role">, {role}</span>}
+  </p>
+</aside>
+
+<style>
+  .pullquote {
+    padding-block: 5rem;
+    border-block-start: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .pullquote {
+      padding-block: 8rem;
+    }
+  }
+
+  .pullquote__quote {
+    margin: 0 auto;
+    max-width: 30ch;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .pullquote__quote {
+      max-width: 24ch;
+    }
+  }
+
+  .pullquote__mark {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.5;
+    color: var(--color-accent);
+    position: absolute;
+    inset-block-start: -0.15em;
+    inset-inline-start: -0.4em;
+    user-select: none;
+  }
+
+  .pullquote__text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+    font-weight: 350;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    font-style: italic;
+    color: var(--color-fg);
+    margin: 0;
+  }
+
+  .pullquote__attribution {
+    margin-block-start: 2rem;
+    text-align: center;
+    color: var(--color-fg-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+  }
+
+  .pullquote__dash {
+    margin-inline-end: 0.5em;
+  }
+
+  .pullquote__role {
+    color: var(--color-fg-subtle);
+  }
+</style>

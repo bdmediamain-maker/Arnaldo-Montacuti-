@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:39:54.068Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/project-6",
+  "slug": "ex-ristorante-gianni",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_66d0ad02e92b43789236d743fd733a84~mv2_d_3543_2362_s_2.jpg",
+    "quality_auto/4b6b13_66d0ad02e92b43789236d743fd733a84~mv2_d_3543_2362_s_2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_66d0ad02e92b43789236d743fd733a84~mv2_d_3543_2362_s_2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_66d0ad02e92b43789236d743fd733a84~mv2_d_3543_2362_s_2.jpg"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+---
+/**
+ * SchemaProject — JSON-LD per ogni pagina progetto.
+ * Type: CreativeWork con additionalType "Building" per disambiguare in architettura.
+ * Riferimento: schema.org/CreativeWork + schema.org/Place per location.
+ */
+import JsonLd from './JsonLd.astro';
+import type { CollectionEntry } from 'astro:content';
+import { categoriaLabel } from '@lib/labels';
+
+interface Props {
+  progetto: CollectionEntry<'progetti'>;
+  heroAbsoluteUrl?: string;
+}
+const { progetto, heroAbsoluteUrl } = Astro.props;
+const { data } = progetto;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://studiomontacuti.it';
+const url = `${site}/progetti/${progetto.id}`;
+
+const data_jsonld: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  '@id': url,
+  additionalType: 'https://schema.org/Building',
+  name: data.titolo,
+  description:
+    data.seo?.description ??
+    `${data.titolo}: progetto ${data.stato} a ${data.meta.localizzazione}, anno ${data.anno}.`,
+  url,
+  inLanguage: 'it-IT',
+  dateCreated: String(data.anno),
+  about: categoriaLabel[data.categoria],
+  keywords: [categoriaLabel[data.categoria], ...(data.tags ?? [])].join(', '),
+  creator: { '@id': `${site}#organization` },
+  publisher: { '@id': `${site}#organization` },
+  locationCreated: {
+    '@type': 'Place',
+    name: data.meta.localizzazione,
+    ...(data.location
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: data.location.lat,
+            longitude: data.location.lng,
+          },
+        }
+      : {}),
+  },
+};
+
+if (heroAbsoluteUrl) {
+  data_jsonld.image = heroAbsoluteUrl;
+}
+
+if (data.meta.committente) {
+  data_jsonld.sponsor = { '@type': 'Organization', name: data.meta.committente };
+}
+---
+
+<JsonLd data={data_jsonld} />

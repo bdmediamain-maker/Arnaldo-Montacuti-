@@ -1,0 +1,17 @@
+{
+  "scraped_at": "2026-06-10T13:39:39.031Z",
+  "source": "https://archmontacuti.wixsite.com/montacuti/project-5",
+  "slug": "quartiere-cesuola",
+  "urls": [
+    "https://static.wixstatic.com/media/4b6b13_744d93aa05e741408c3181529f1f2951~mv2.jpg",
+    "quality_auto/4b6b13_744d93aa05e741408c3181529f1f2951~mv2.jpg"
+  ],
+  "downloaded": 1,
+  "skipped": 0,
+  "errors": [
+    {
+      "url": "quality_auto/4b6b13_744d93aa05e741408c3181529f1f2951~mv2.jpg",
+      "error": "Failed to parse URL from quality_auto/4b6b13_744d93aa05e741408c3181529f1f2951~mv2.jpg"
+    }
+  ]
+}
