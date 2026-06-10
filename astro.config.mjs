@@ -1,17 +1,18 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import node from '@astrojs/node';
+import netlify from '@astrojs/netlify';
 
 /**
  * Output: static.
- * Adapter Node solo per route con `export const prerender = false` (es. /api/contact).
- * Quando si decide il target serverless (Vercel/Netlify) sostituire l'adapter.
+ * Adapter Netlify per le route con `export const prerender = false`
+ * (es. /api/contact). Le pagine statiche restano nella CDN Netlify;
+ * l'endpoint diventa una Netlify Function on-demand.
  */
 export default defineConfig({
   site: 'https://studiomontacuti.it',
   output: 'static',
-  adapter: node({ mode: 'standalone' }),
+  adapter: netlify(),
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/api/'),
